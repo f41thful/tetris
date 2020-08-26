@@ -29,7 +29,7 @@ public class GraphicsTest {
         Board board = new BoardImpl(40, 20);
 
         Piece piece =
-        PieceBuilder.create(0).add("x  ")
+        PieceBuilder.create(0, new Point(5,5)).add("x  ")
                               .add("x  ")
                               .add("xx ")
                               .build();
@@ -43,7 +43,7 @@ public class GraphicsTest {
 
         screen.refresh();
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 20; i++) {
             piece.rotateLeft();
             screen.clear();
             draw(screen, pieceDrawer.getDrawPoints(piece));

@@ -45,10 +45,14 @@ public class Piece {
             throw new IllegalStateException("Couldn't get the max width for points " + occupiedPoints);
         }
 
+        width = optionalWidth.getAsInt();
+
         OptionalInt optionalHeight = occupiedPoints.stream().mapToInt(p -> p.y).max();
         if (!optionalHeight.isPresent()) {
             throw new IllegalStateException("Couldn't get the max height for points " + occupiedPoints);
         }
+
+        height = optionalHeight.getAsInt();
     }
 
     public int getType() {
