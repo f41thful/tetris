@@ -4,6 +4,7 @@ import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.util.CollectionUtil;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.OptionalInt;
 
 public class Piece {
@@ -14,6 +15,22 @@ public class Piece {
     private Collection<Point> occupiedPoints;
 
     public Piece(int type, Point position, Collection<Point> occupiedPoints) {
+        if(type < 0) {
+            throw new IllegalArgumentException("type must be >= 0, it was " + type);
+        }
+
+        validatePoint(position, "Position must be non null and coordinates must both be >= 0.");
+
+        Objects.requireNonNull(occupiedPoints);
+
+        if(occupiedPoints.isEmpty()) {
+            throw new IllegalArgumentException("occupied points cannot be empty.");
+        }
+
+        for(Point p : occupiedPoints) {
+            validatePoint(p, "Occupied points must be non null and coordinates must both be >= 0.");
+        }
+
         this.type = type;
         this.position = position.clone();
         this.occupiedPoints = CollectionUtil.deepCopy(occupiedPoints);
@@ -44,5 +61,20 @@ public class Piece {
         }
 
         return points;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    private void validatePoint(Point p, String msg) {
+        Objects.requireNonNull(p);
+        if(p.x < 0 || p.y < 0) {
+            throw new IllegalArgumentException(msg);
+        }
     }
 }
