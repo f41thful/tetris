@@ -4,8 +4,11 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.software_engineering_professor.piece.Piece;
 
+import java.util.Objects;
+
 public class PieceDrawer {
     public DrawPoints getDrawPoints(Piece p) {
+        Objects.requireNonNull(p);
         TextCharacter textCharacter = new TextCharacter(' ', TextColor.ANSI.DEFAULT, getColor(p.getType()));
 
         return new DrawPoints(p.getGlobalPoints(), textCharacter);
