@@ -3,7 +3,9 @@ package com.software_engineering_professor.piece;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.util.CollectionUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 
@@ -81,6 +83,15 @@ public class Piece {
 
     public void moveHorizontal(int numPos) {
         position.x += numPos;
+    }
+
+    public void rotateLeft() {
+        Collection<Point> newPoints = new ArrayList<>();
+        for(Point p : occupiedPoints) {
+            newPoints.add(new Point(p.y, height - 1 - p.x));
+        }
+
+        occupiedPoints = newPoints;
     }
 
     private void validatePoint(Point p, String msg) {
