@@ -42,6 +42,18 @@ public class GraphicsTest {
         draw(screen, pieceDrawer.getDrawPoints(piece));
 
         screen.refresh();
+
+        for(int i = 0; i < 4; i++) {
+            piece.rotateLeft();
+            screen.clear();
+            draw(screen, pieceDrawer.getDrawPoints(piece));
+            screen.refresh();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void draw(Screen screen, Collection<DrawPoints> drawPointss) {

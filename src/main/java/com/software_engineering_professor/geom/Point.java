@@ -14,4 +14,8 @@ public class Point implements Cloneable<Point> {
     public Point clone() {
         return new Point(this.x, this.y);
     }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }

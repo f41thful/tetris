@@ -92,6 +92,7 @@ public class Piece {
         }
 
         occupiedPoints = newPoints;
+        System.out.println("after rotation: " + occupiedPoints);
     }
 
     private void validatePoint(Point p, String msg) {
