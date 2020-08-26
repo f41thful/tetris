@@ -5,7 +5,6 @@ import com.software_engineering_professor.util.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 
@@ -96,7 +95,6 @@ public class Piece {
         }
 
         occupiedPoints = newPoints;
-        System.out.println("after rotation: " + occupiedPoints);
     }
 
     private void validatePoint(Point p, String msg) {
