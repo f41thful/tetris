@@ -71,6 +71,18 @@ public class Piece {
         return height;
     }
 
+    public void moveDown(int numPos) {
+        if(numPos < 0) {
+            throw new IllegalArgumentException("numPost must be natural.");
+        }
+
+        position.y += numPos;
+    }
+
+    public void moveHorizontal(int numPos) {
+        position.x += numPos;
+    }
+
     private void validatePoint(Point p, String msg) {
         Objects.requireNonNull(p);
         if(p.x < 0 || p.y < 0) {
