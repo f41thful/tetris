@@ -1,16 +1,20 @@
 package com.software_engineering_professor.board;
 
+import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.piece.Piece;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class BoardImpl implements Board{
     private Collection<Piece> pieces;
     private Collection<Piece> unmodifiablePieces;
     private int width;
     private int height;
+    private Point upperLeftPoint = new Point(0, 0);
 
     public BoardImpl(int width, int height) {
         if(width <= 0 || height <= 0) {
@@ -32,6 +36,11 @@ public class BoardImpl implements Board{
     }
 
     @Override
+    public Point getUpperLeftPoint() {
+        return upperLeftPoint;
+    }
+
+    @Override
     public int getWidth() {
         return width;
     }
@@ -39,6 +48,15 @@ public class BoardImpl implements Board{
     @Override
     public int getHeight() {
         return height;
+    }
+
+    @Override
+    public Collection<Point> getOccupiedPoints(Piece p) {
+        return Collections.unmodifiableCollection(
+            pieces.stream()
+                  .filter(bp -> bp != p)
+                  .flatMap(bp -> bp.getGlobalPoints().stream())
+                  .collect(Collectors.toList()));
     }
 
     public Collection<Piece> getPieces() {
