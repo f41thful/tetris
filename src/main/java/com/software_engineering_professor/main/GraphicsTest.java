@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
+        Point screenOrigin = new Point(20, 3);
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
         Screen screen = null;
 
@@ -50,8 +51,8 @@ public class GraphicsTest {
         board.addPiece(piece);
         board.addPiece(piece2);
 
-        PieceDrawer pieceDrawer = new PieceDrawer();
-        BoardDrawer boardDrawer = new BoardDrawer();
+        PieceDrawer pieceDrawer = new PieceDrawer(screenOrigin);
+        BoardDrawer boardDrawer = new BoardDrawer(screenOrigin);
 
         for(int i = 0; i < 100; i++) {
             screen.clear();

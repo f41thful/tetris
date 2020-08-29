@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class BoardDrawer {
+public class BoardDrawer extends Drawer{
+
+    public BoardDrawer(Point origin) {
+        super(origin);
+    }
+
     public Collection<DrawPoints> getDrawPoints(Board b) {
         Objects.requireNonNull(b);
 
@@ -23,14 +28,14 @@ public class BoardDrawer {
             pointsHeight.add(new Point(width, i));
         }
 
-        points.add(new DrawPoints(pointsHeight, getVerticalWallCharacter()));
+        points.add(new DrawPoints(transformToOrigin(pointsHeight), getVerticalWallCharacter()));
 
         Collection<Point> pointsWidth = new ArrayList<>();
         for(int i = 0; i <= width; i++) {
             pointsWidth.add(new Point(i, height));
         }
 
-        points.add(new DrawPoints(pointsWidth, getHorizontalWallCharacter()));
+        points.add(new DrawPoints(transformToOrigin(pointsWidth), getHorizontalWallCharacter()));
 
         return points;
     }
