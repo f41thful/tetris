@@ -60,7 +60,7 @@ public class GraphicsTest {
             draw(screen, pieceDrawer.getDrawPoints(piece));
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
-            piece2.rotateLeft();
+            piece2.moveHorizontal(1);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

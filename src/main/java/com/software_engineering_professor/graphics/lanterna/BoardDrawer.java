@@ -23,16 +23,16 @@ public class BoardDrawer extends Drawer{
         int height = b.getHeight();
 
         Collection<Point> pointsHeight = new ArrayList<>();
-        for(int i = 0; i < height; i++) {
-            pointsHeight.add(new Point(0, i));
-            pointsHeight.add(new Point(width, i));
+        for(int i = 0; i <= height; i++) {
+            pointsHeight.add(new Point(-1, i));
+            pointsHeight.add(new Point(width + 1, i));
         }
 
         points.add(new DrawPoints(transformToOrigin(pointsHeight), getVerticalWallCharacter()));
 
         Collection<Point> pointsWidth = new ArrayList<>();
-        for(int i = 0; i <= width; i++) {
-            pointsWidth.add(new Point(i, height));
+        for(int i = -1; i <= width + 1; i++) {
+            pointsWidth.add(new Point(i, height + 1));
         }
 
         points.add(new DrawPoints(transformToOrigin(pointsWidth), getHorizontalWallCharacter()));
