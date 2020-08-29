@@ -32,7 +32,7 @@ public class GraphicsTest {
         PositionValidation positionValidation = new PositionValidation(board);
 
         Piece piece =
-        PieceBuilder.create(0).add("x  ")
+        PieceBuilder.create(0, new Point(6, 7)).add("x  ")
                               .add("x  ")
                               .add("xx ")
                               .positionValidation(positionValidation)
@@ -53,13 +53,13 @@ public class GraphicsTest {
         PieceDrawer pieceDrawer = new PieceDrawer();
         BoardDrawer boardDrawer = new BoardDrawer();
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 100; i++) {
             screen.clear();
             draw(screen, boardDrawer.getDrawPoints(board));
             draw(screen, pieceDrawer.getDrawPoints(piece));
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
-            piece2.moveHorizontal(1);
+            piece2.rotateLeft();
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
