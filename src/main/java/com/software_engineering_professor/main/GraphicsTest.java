@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
-        Point screenOrigin = new Point(20, 3);
+        Point screenOrigin = new Point(20, 2);
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
         Screen screen = null;
 
@@ -33,14 +33,14 @@ public class GraphicsTest {
         PositionValidation positionValidation = new PositionValidation(board);
 
         Piece piece =
-        PieceBuilder.create(0, new Point(6, 7)).add("x  ")
+        PieceBuilder.create(0, new Point(15, 2)).add("x  ")
                               .add("x  ")
                               .add("xx ")
                               .positionValidation(positionValidation)
                               .build();
 
         Piece piece2 =
-        PieceBuilder.create(1, new Point(7, 7))
+        PieceBuilder.create(1, new Point(15, 7))
                               .add("x  ")
                               .add("x  ")
                               .add("xx ")
@@ -60,7 +60,8 @@ public class GraphicsTest {
             draw(screen, pieceDrawer.getDrawPoints(piece));
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
-            piece2.moveHorizontal(1);
+            piece.moveDown(1);
+            piece2.moveDown(1);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
