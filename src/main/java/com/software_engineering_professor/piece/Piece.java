@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 public class Piece {
     private int type;
@@ -102,6 +103,14 @@ public class Piece {
         if(positionValidation.isValid(this, getGlobalPoints(position, newPoints))) {
             occupiedPoints = newPoints;
         }
+    }
+
+    public void delete(Collection<Point> points) {
+        Objects.requireNonNull(points);
+        Collection<Point> toBeRemoved;
+
+        toBeRemoved = occupiedPoints.stream().filter(points::contains).collect(Collectors.toList());
+        toBeRemoved.forEach(occupiedPoints::remove);
     }
 
     private void validatePoint(Point p, String msg) {

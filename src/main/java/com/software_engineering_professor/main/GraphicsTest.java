@@ -16,7 +16,6 @@ import com.software_engineering_professor.piece.PieceBuilder;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
