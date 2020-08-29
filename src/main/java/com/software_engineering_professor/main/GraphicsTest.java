@@ -16,6 +16,7 @@ import com.software_engineering_professor.piece.PieceBuilder;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
@@ -60,7 +61,21 @@ public class GraphicsTest {
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
             piece.moveDown(1);
-            piece2.moveDown(1);
+
+//            switch (i) {
+//                case 6:
+//                    piece.delete(Collections.singletonList(new Point(0, 0)));
+//                    break;
+//                case 8:
+//                    piece.delete(Collections.singletonList(new Point(0, 1)));
+//                    break;
+//                case 10:
+//                    piece.delete(Collections.singletonList(new Point(0, 2)));
+//                    break;
+//                case 14:
+//                    piece.delete(Collections.singletonList(new Point(1, 2)));
+//                    break;
+//            }
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

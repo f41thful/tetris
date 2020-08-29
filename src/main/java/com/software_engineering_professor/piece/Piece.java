@@ -6,6 +6,7 @@ import com.software_engineering_professor.util.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
@@ -111,6 +112,10 @@ public class Piece {
 
         toBeRemoved = occupiedPoints.stream().filter(points::contains).collect(Collectors.toList());
         toBeRemoved.forEach(occupiedPoints::remove);
+    }
+
+    public Collection<Point> getLocalPoints() {
+        return CollectionUtil.deepCopy(occupiedPoints);
     }
 
     private void validatePoint(Point p, String msg) {
