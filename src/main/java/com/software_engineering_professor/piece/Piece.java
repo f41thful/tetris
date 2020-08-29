@@ -1,5 +1,6 @@
 package com.software_engineering_professor.piece;
 
+import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.util.CollectionUtil;
 
@@ -14,8 +15,9 @@ public class Piece {
     private int width;
     private int height;
     private Collection<Point> occupiedPoints;
+    private PositionValidation positionValidation;
 
-    public Piece(int type, Point position, Collection<Point> occupiedPoints) {
+    public Piece(int type, Point position, Collection<Point> occupiedPoints, PositionValidation positionValidation) {
         if(type < 0) {
             throw new IllegalArgumentException("type must be >= 0, it was " + type);
         }
@@ -36,6 +38,9 @@ public class Piece {
         this.position = position.clone();
         this.occupiedPoints = CollectionUtil.deepCopy(occupiedPoints);
         calculateDimensions();
+
+        Objects.requireNonNull(positionValidation);
+        this.positionValidation = positionValidation;
     }
 
     private void calculateDimensions() {
@@ -59,13 +64,7 @@ public class Piece {
     }
 
     public Collection<Point> getGlobalPoints() {
-        Collection<Point> points = CollectionUtil.deepCopy(occupiedPoints);
-        for(Point p : points) {
-            p.x += position.x;
-            p.y += position.y;
-        }
-
-        return points;
+       return getGlobalPoints(position, occupiedPoints);
     }
 
     public int getWidth() {
@@ -81,11 +80,17 @@ public class Piece {
             throw new IllegalArgumentException("numPost must be natural.");
         }
 
-        position.y += numPos;
+        Point newPosition = new Point(position.x, position.y + numPos);
+        if(positionValidation.isValid(this, getGlobalPoints(newPosition, occupiedPoints))) {
+            position.y += numPos;
+        }
     }
 
     public void moveHorizontal(int numPos) {
-        position.x += numPos;
+        Point newPosition = new Point(position.x + numPos, position.y);
+        if(positionValidation.isValid(this, getGlobalPoints(newPosition, occupiedPoints))) {
+            position.x += numPos;
+        }
     }
 
     public void rotateLeft() {
@@ -94,7 +99,9 @@ public class Piece {
             newPoints.add(new Point(p.y, height - 1 - p.x));
         }
 
-        occupiedPoints = newPoints;
+        if(positionValidation.isValid(this, getGlobalPoints(position, newPoints))) {
+            occupiedPoints = newPoints;
+        }
     }
 
     private void validatePoint(Point p, String msg) {
@@ -102,5 +109,15 @@ public class Piece {
         if(p.x < 0 || p.y < 0) {
             throw new IllegalArgumentException(msg);
         }
+    }
+
+    private Collection<Point> getGlobalPoints(Point position, Collection<Point> occupiedPoints) {
+        Collection<Point> points = CollectionUtil.deepCopy(occupiedPoints);
+        for(Point p : points) {
+            p.x += position.x;
+            p.y += position.y;
+        }
+
+        return points;
     }
 }

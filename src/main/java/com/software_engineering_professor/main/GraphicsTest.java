@@ -15,6 +15,7 @@ import com.software_engineering_professor.piece.PieceBuilder;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
@@ -29,19 +30,39 @@ public class GraphicsTest {
         Board board = new BoardImpl(40, 20);
 
         Piece piece =
-        PieceBuilder.create(0, new Point(5,5)).add("x  ")
+        PieceBuilder.create(0).add("x  ")
+                              .add("x  ")
+                              .add("xx ")
+                              .build();
+
+        Piece piece2 =
+        PieceBuilder.create(1, new Point(7, 7))
+                              .add("x  ")
                               .add("x  ")
                               .add("xx ")
                               .build();
 
 
+        board.addPiece(piece);
+        board.addPiece(piece2);
+
         PieceDrawer pieceDrawer = new PieceDrawer();
         BoardDrawer boardDrawer = new BoardDrawer();
 
-        draw(screen, boardDrawer.getDrawPoints(board));
-        draw(screen, pieceDrawer.getDrawPoints(piece));
+        for(int i = 0; i < 10; i++) {
+            screen.clear();
+            draw(screen, boardDrawer.getDrawPoints(board));
+            draw(screen, pieceDrawer.getDrawPoints(piece));
+            draw(screen, pieceDrawer.getDrawPoints(piece2));
+            screen.refresh();
+            piece2.moveHorizontal(-1);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        screen.refresh();
     }
 
     private static void draw(Screen screen, Collection<DrawPoints> drawPointss) {

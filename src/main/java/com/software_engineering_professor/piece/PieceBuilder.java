@@ -1,5 +1,6 @@
 package com.software_engineering_professor.piece;
 
+import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class PieceBuilder {
     private Collection<Point> points;
     private int y;
     private Point position;
+    private PositionValidation positionValidation;
 
 
     public static PieceBuilder create(int type) {
@@ -59,7 +61,21 @@ public class PieceBuilder {
         return this;
     }
 
+    public PieceBuilder positionValidation(PositionValidation positionValidation) {
+        this.positionValidation = positionValidation;
+
+        return this;
+    }
+
     public Piece build() {
-        return new Piece(type, position, points);
+        if(positionValidation == null) {
+            positionValidation = new PositionValidation(null){
+                public boolean isValid(Piece p, Collection<Point> points) {
+                    return true;
+                }
+            };
+        }
+
+        return new Piece(type, position, points, positionValidation);
     }
 }
