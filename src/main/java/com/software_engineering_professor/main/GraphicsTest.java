@@ -60,7 +60,7 @@ public class GraphicsTest {
             draw(screen, pieceDrawer.getDrawPoints(piece));
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
-            piece.moveDown(1);
+            piece.moveHorizontal(1);
 
 //            switch (i) {
 //                case 6:

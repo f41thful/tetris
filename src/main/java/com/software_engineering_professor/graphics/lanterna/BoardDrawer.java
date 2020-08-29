@@ -25,13 +25,13 @@ public class BoardDrawer extends Drawer{
         Collection<Point> pointsHeight = new ArrayList<>();
         for(int i = 0; i <= height; i++) {
             pointsHeight.add(new Point(-1, i));
-            pointsHeight.add(new Point(width + 1, i));
+            pointsHeight.add(new Point(width, i));
         }
 
         points.add(new DrawPoints(transformToOrigin(pointsHeight), getVerticalWallCharacter()));
 
         Collection<Point> pointsWidth = new ArrayList<>();
-        for(int i = -1; i <= width + 1; i++) {
+        for(int i = -1; i <= width; i++) {
             pointsWidth.add(new Point(i, height + 1));
         }
 

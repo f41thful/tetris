@@ -22,9 +22,9 @@ public class PositionValidation {
 
     private boolean areWithinTheBoard(Collection<Point> points) {
         Point upperLeftPoint = board.getUpperLeftPoint();
-        return inRangeClosed(points, p -> p.x, upperLeftPoint.x, board.getWidth())
+        return inRangeClosed(points, p -> p.x, upperLeftPoint.x, board.getWidth() - 1)
                &&
-               inRangeClosed(points, p -> p.y, upperLeftPoint.y, board.getHeight());
+               inRangeClosed(points, p -> p.y, upperLeftPoint.y, board.getHeight() - 1);
     }
 
     private boolean inRangeClosed(Collection<Point> points, Function<Point, Integer> mapper, int begin, int end) {

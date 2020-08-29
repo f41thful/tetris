@@ -41,12 +41,17 @@ class PositionValidationTest {
 
     @Test
     public void givenAPointOutsideBoardDimensions_thenNotValid() {
-        assertFalse(positionValidation.isValid(piece, Arrays.asList(new Point(25, 25))));
+        assertFalse(positionValidation.isValid(piece, Collections.singletonList(new Point(25, 25))));
+    }
+
+    @Test
+    public void givenAPointInTheBorder_thenNotValid() {
+        assertFalse(positionValidation.isValid(piece, Collections.singletonList(new Point(20, 20))));
     }
 
     @Test
     public void givenAllThePointsWithinBoard_thenValid() {
-        assertTrue(positionValidation.isValid(piece, Arrays.asList(new Point(19, 19))));
+        assertTrue(positionValidation.isValid(piece, Collections.singletonList(new Point(19, 19))));
     }
 
     @Test
