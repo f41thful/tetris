@@ -6,6 +6,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.board.BoardImpl;
+import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.BoardDrawer;
 import com.software_engineering_professor.graphics.lanterna.DrawPoints;
@@ -28,11 +29,13 @@ public class GraphicsTest {
         screen.setCursorPosition(null);
 
         Board board = new BoardImpl(40, 20);
+        PositionValidation positionValidation = new PositionValidation(board);
 
         Piece piece =
         PieceBuilder.create(0).add("x  ")
                               .add("x  ")
                               .add("xx ")
+                              .positionValidation(positionValidation)
                               .build();
 
         Piece piece2 =
@@ -40,6 +43,7 @@ public class GraphicsTest {
                               .add("x  ")
                               .add("x  ")
                               .add("xx ")
+                              .positionValidation(positionValidation)
                               .build();
 
 
@@ -55,7 +59,7 @@ public class GraphicsTest {
             draw(screen, pieceDrawer.getDrawPoints(piece));
             draw(screen, pieceDrawer.getDrawPoints(piece2));
             screen.refresh();
-            piece2.moveHorizontal(-1);
+            piece2.moveHorizontal(1);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

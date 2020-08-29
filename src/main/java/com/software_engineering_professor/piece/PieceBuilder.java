@@ -71,6 +71,7 @@ public class PieceBuilder {
         if(positionValidation == null) {
             positionValidation = new PositionValidation(null){
                 public boolean isValid(Piece p, Collection<Point> points) {
+                    System.out.println("Using always valid PositionValidation.");
                     return true;
                 }
             };
