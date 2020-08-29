@@ -35,6 +35,12 @@ class LineCompletionTest {
         assertTrue(lineCompletion.isComplete(4, points));
     }
 
+    @Test
+    public void givenNotComplete_thenNotCompleted() {
+        Collection<Point> points = getPoints(0, 1, 2, 3);
+        assertFalse(lineCompletion.isComplete(4, points));
+    }
+
     private Collection<Point> getPoints(int y, Integer... xs) {
         Collection<Point> points = new ArrayList<>();
         for(Integer x : xs) {
