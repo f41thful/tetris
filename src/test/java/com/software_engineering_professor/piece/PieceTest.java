@@ -1,59 +1,64 @@
 package com.software_engineering_professor.piece;
 
-import com.software_engineering_professor.board.Board;
-import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PieceTest {
     private Piece piece;
-    private Collection<Point> points;
+    private Collection<Point> localPoints;
 
     @BeforeEach
     public void setUp() {
-        piece = new Piece(0, new Point(0, 0), getPoints(), new PositionValidation(mock(Board.class)));
-        points = getPoints();
+        piece = PieceBuilder.create(0, new Point(2, 2))
+                            .add("x  ")
+                            .add("x  ")
+                            .add("xx ").build();
+
+        localPoints = piece.getLocalPoints();
     }
 
     @Test
-    public void givenPointIsNotInThePiece_thenDoNothing() {
-        piece.delete(Collections.singletonList(new Point(7, 7)));
-        assertEquals(points, piece.getLocalPoints());
+    public void givenPieceIsNotInLine_thenDeletesNothing() {
+        piece.deleteGlobalLine(0);
+
+        assertEquals(localPoints, piece.getLocalPoints());
     }
 
     @Test
-    public void givenPointIsInThePiece_thenRemoveIt() {
-        piece.delete(Collections.singletonList(new Point(0, 0)));
-        points.remove(new Point(0, 0));
+    public void givenPieceIsNotInLineV2_thenDeletesNothing() {
+        piece.deleteGlobalLine(5);
 
-        assertEquals(points, piece.getLocalPoints());
+        assertEquals(localPoints, piece.getLocalPoints());
     }
 
     @Test
-    public void givenPointsAreInThePiece_thenRemoveThem() {
-        piece.delete(Arrays.asList(new Point(0, 0), new Point(0, 1), new Point(1, 2), new Point(7, 7)));
-        points.remove(new Point(0, 0));
-        points.remove(new Point(0, 1));
-        points.remove(new Point(1, 2));
+    public void givenOnePointIsInTheLine_thenDeletesOnlyThatPoint() {
+        piece.deleteGlobalLine(2);
 
-        assertEquals(points, piece.getLocalPoints());
+        Collection<Point> actualPoints = piece.getLocalPoints();
+        assertEquals(3, actualPoints.size());
+        for(Point p : actualPoints) {
+            assertNotEquals(0, p.y);
+            assertTrue(localPoints.contains(p));
+        }
     }
 
-    private Collection<Point> getPoints() {
-        return
-                new ArrayList<>(Arrays.asList(new Point(0, 0),
-                        new Point(0, 1),
-                        new Point(0, 2),
-                        new Point(1, 2)
-                ));
+    @Test
+    public void givenTwoPointsInTheLine_thenDeletesOnlyThosePoints() {
+        piece.deleteGlobalLine(4);
+
+        Collection<Point> actualPoints = piece.getLocalPoints();
+        assertEquals(2, actualPoints.size());
+        for(Point p : actualPoints) {
+            assertNotEquals(2, p.y);
+            assertTrue(localPoints.contains(p));
+        }
     }
 }

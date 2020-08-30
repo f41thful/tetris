@@ -6,7 +6,6 @@ import com.software_engineering_professor.util.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
@@ -106,16 +105,18 @@ public class Piece {
         }
     }
 
-    public void delete(Collection<Point> points) {
-        Objects.requireNonNull(points);
-        Collection<Point> toBeRemoved;
-
-        toBeRemoved = occupiedPoints.stream().filter(points::contains).collect(Collectors.toList());
-        toBeRemoved.forEach(occupiedPoints::remove);
-    }
-
     public Collection<Point> getLocalPoints() {
         return CollectionUtil.deepCopy(occupiedPoints);
+    }
+
+    public void deleteGlobalLine(int line) {
+        if(line < 0) {
+            throw new IllegalArgumentException("line must be >= 0.");
+        }
+
+        int localLine = line - position.y;
+        Collection<Point> tobeDeleted = occupiedPoints.stream().filter(p -> p.y == localLine).collect(Collectors.toList());
+        tobeDeleted.forEach(occupiedPoints::remove);
     }
 
     private void validatePoint(Point p, String msg) {

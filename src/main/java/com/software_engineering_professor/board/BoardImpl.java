@@ -2,11 +2,11 @@ package com.software_engineering_professor.board;
 
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.piece.Piece;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BoardImpl implements Board{
@@ -15,6 +15,7 @@ public class BoardImpl implements Board{
     private int width;
     private int height;
     private Point upperLeftPoint = new Point(0, 0);
+    private BoardLineCompletion boardLineCompletion;
 
     public BoardImpl(int width, int height) {
         if(width <= 0 || height <= 0) {
@@ -25,6 +26,7 @@ public class BoardImpl implements Board{
         this.height = height;
         pieces = new ArrayList<>();
         unmodifiablePieces = Collections.unmodifiableCollection(pieces);
+        boardLineCompletion = new BoardLineCompletion();
     }
 
     @Override
@@ -59,7 +61,15 @@ public class BoardImpl implements Board{
                   .collect(Collectors.toList()));
     }
 
-    public Collection<Piece> getPieces() {
-        return unmodifiablePieces;
+    public Collection<Integer> detectAndDeleteCompletedLines() {
+        Collection<Integer> completedLines = boardLineCompletion.getCompletedLines(this);
+        deleteCompletedLines(completedLines);
+
+        return completedLines;
+    }
+
+    private void deleteCompletedLines(Collection<Integer> lines) {
+        Objects.requireNonNull(lines);
+        pieces.forEach(piece -> lines.forEach(piece::deleteGlobalLine));
     }
 }
