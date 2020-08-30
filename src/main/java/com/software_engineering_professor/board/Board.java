@@ -16,4 +16,5 @@ public interface Board {
     // get occupied points without taking into account piece p.
     Collection<Point> getOccupiedPoints(Piece p);
     List<Piece> getPiecesAboveOrInLineOrderedByHeightDesc(int line);
+    Collection<Integer> detectAndDeleteCompletedLines();
 }
