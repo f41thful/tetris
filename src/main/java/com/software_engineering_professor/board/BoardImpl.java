@@ -6,6 +6,8 @@ import com.software_engineering_professor.piece.Piece;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -66,6 +68,15 @@ public class BoardImpl implements Board{
         deleteCompletedLines(completedLines);
 
         return completedLines;
+    }
+
+    // The order will be based on position. Meaning, a piece closer to the bottom is considered to have more height.
+    @Override
+    public List<Piece> getPiecesAboveOrInLineOrderedByHeightDesc(int line) {
+        return
+                pieces.stream().filter(piece -> piece.isAboveOrInGlobalLine(line))
+                        .sorted(Collections.reverseOrder(Comparator.comparingInt(piece -> piece.getPosition().y)))
+                        .collect(Collectors.toList());
     }
 
     private void deleteCompletedLines(Collection<Integer> lines) {

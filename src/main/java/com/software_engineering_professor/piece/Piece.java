@@ -105,6 +105,10 @@ public class Piece {
         }
     }
 
+    public Point getPosition() {
+        return position.clone();
+    }
+
     public Collection<Point> getLocalPoints() {
         return CollectionUtil.deepCopy(occupiedPoints);
     }
@@ -117,6 +121,14 @@ public class Piece {
         int localLine = line - position.y;
         Collection<Point> tobeDeleted = occupiedPoints.stream().filter(p -> p.y == localLine).collect(Collectors.toList());
         tobeDeleted.forEach(occupiedPoints::remove);
+    }
+
+    public boolean isAboveOrInGlobalLine(int line) {
+        if(line < 0) {
+            throw new IllegalArgumentException("line must be >= 0.");
+        }
+
+        return (line - position.y) >= 0;
     }
 
     private void validatePoint(Point p, String msg) {
