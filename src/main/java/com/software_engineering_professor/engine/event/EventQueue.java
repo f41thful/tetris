@@ -52,6 +52,8 @@ public class EventQueue {
             pieces.clear();
         }
 
+        events.clear();
+
         return moveDownAlwaysValid;
     }
 
