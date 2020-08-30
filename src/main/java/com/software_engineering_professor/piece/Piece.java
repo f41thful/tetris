@@ -134,6 +134,10 @@ public class Piece {
         return (line - position.y) >= 0;
     }
 
+    public boolean isValidPosition() {
+        return positionValidation.isValid(this, getGlobalPoints());
+    }
+
     private void validatePoint(Point p, String msg) {
         Objects.requireNonNull(p);
         if(p.x < 0 || p.y < 0) {

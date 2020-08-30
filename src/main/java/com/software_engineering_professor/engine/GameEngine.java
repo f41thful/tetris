@@ -19,6 +19,18 @@ public class GameEngine {
 
     public void start() {
         while(!isFinished) {
+            if(!moveDownEventQueue.hasPieces()) {
+                Piece piece = pieceGenerator.next();
+                if(!piece.isValidPosition()) {
+                    System.out.println("Game is finished because piece " + piece + " could not be placed in a valid position.");
+                    isFinished = true;
+                    break;
+                }
+
+                moveDownEventQueue.addIfNotPresent(piece);
+                otherEventsEventQueue.addIfNotPresent(piece);
+            }
+
 
         }
     }

@@ -98,6 +98,7 @@ class EventQueueTest {
         eventQueue.addEvent(new Event(MOVE_DOWN, 1));
         eventQueue.performEvents();
         pieces.forEach(piece -> verify(piece, times(1)).moveDown(1));
+        assertFalse(eventQueue.hasPieces());
     }
 
     @Test
@@ -112,6 +113,7 @@ class EventQueueTest {
         assertFalse(eventQueue.performEvents());
 
         pieces.forEach(piece -> verify(piece, times(2)).moveDown(1));
+        assertTrue(eventQueue.hasPieces());
     }
 
     private int addRandomNumberOfEvents(EventType eventType, EventQueue eventQueue) {

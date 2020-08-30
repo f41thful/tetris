@@ -4,6 +4,7 @@ import com.software_engineering_professor.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,6 +65,10 @@ public class EventQueue {
               .forEach(this.pieces::add);
     }
 
+    public void addIfNotPresent(Piece piece) {
+        addIfNotPresent(Collections.singletonList(piece));
+    }
+
     public void addEvent(Event e) {
         if(e == null) {
             System.out.println("Null events are not permited.");
@@ -71,5 +76,9 @@ public class EventQueue {
         }
 
         this.events.add(e);
+    }
+
+    public boolean hasPieces() {
+        return !pieces.isEmpty();
     }
 }
