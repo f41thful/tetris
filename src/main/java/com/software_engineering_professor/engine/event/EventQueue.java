@@ -3,6 +3,7 @@ package com.software_engineering_professor.engine.event;
 import com.software_engineering_professor.piece.Piece;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,12 +26,15 @@ public class EventQueue {
      */
     public boolean performEvents() {
         boolean moveDownAlwaysValid = true;
+        boolean noPieceCouldMove = true;
         for(Piece p : pieces) {
             for(Event e : events) {
                 try {
                     switch (e.getEventType()) {
                         case MOVE_DOWN:
-                            moveDownAlwaysValid &= p.moveDown(e.getValue());
+                            boolean couldMove = p.moveDown(e.getValue());
+                            moveDownAlwaysValid &= couldMove;
+                            noPieceCouldMove &= !couldMove;
                             break;
                         case MOVE_HORIZONTAL:
                             p.moveHorizontal(e.getValue());
@@ -46,6 +50,17 @@ public class EventQueue {
             }
         }
 
+        if(noPieceCouldMove) {
+            pieces.clear();
+        }
+
         return moveDownAlwaysValid;
+    }
+
+    public void addIfNotPresent(Collection<Piece> pieces) {
+        Objects.requireNonNull(pieces);
+        pieces.stream()
+              .filter(piece -> !this.pieces.contains(piece))
+              .forEach(this.pieces::add);
     }
 }
