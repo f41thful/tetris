@@ -76,7 +76,7 @@ public class Piece {
         return height;
     }
 
-    public void moveDown(int numPos) {
+    public boolean moveDown(int numPos) {
         if(numPos < 0) {
             throw new IllegalArgumentException("numPost must be natural.");
         }
@@ -84,6 +84,9 @@ public class Piece {
         Point newPosition = new Point(position.x, position.y + numPos);
         if(positionValidation.isValid(this, getGlobalPoints(newPosition, occupiedPoints))) {
             position.y += numPos;
+            return true;
+        } else {
+            return false;
         }
     }
 
