@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import static com.software_engineering_professor.engine.event.EventType.MOVE_DOWN;
-
 public class EventQueue {
     private List<Piece> pieces;
     private List<Event> events;
@@ -44,7 +42,7 @@ public class EventQueue {
                             break;
                     }
                 } catch(Exception ex) {
-                    System.out.println("Event " + e + " was not delivered because of " + ex.getMessage());
+                    System.out.println("Event " + e + " was not delivered to piece " + p + " because of " + ex.getMessage());
                     System.out.println(e);
                 }
             }
@@ -62,5 +60,14 @@ public class EventQueue {
         pieces.stream()
               .filter(piece -> !this.pieces.contains(piece))
               .forEach(this.pieces::add);
+    }
+
+    public void addEvent(Event e) {
+        if(e == null) {
+            System.out.println("Null events are not permited.");
+            return;
+        }
+
+        this.events.add(e);
     }
 }

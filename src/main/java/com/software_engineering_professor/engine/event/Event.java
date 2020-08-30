@@ -4,19 +4,16 @@ public class Event {
     private EventType eventType;
     private int value;
 
+    public Event(EventType eventType, int value) {
+        this.eventType = eventType;
+        this.value = value;
+    }
+
     public EventType getEventType() {
         return eventType;
     }
 
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 }
