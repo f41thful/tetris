@@ -3,14 +3,17 @@ package com.software_engineering_professor.main;
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.board.BoardImpl;
 import com.software_engineering_professor.board.PositionValidation;
+import com.software_engineering_professor.engine.PieceGenerator;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.DrawerFactory;
 import com.software_engineering_professor.graphics.lanterna.GeneralDrawer;
 import com.software_engineering_professor.graphics.lanterna.ScreenManager;
 import com.software_engineering_professor.piece.Piece;
 import com.software_engineering_professor.piece.PieceBuilder;
+import com.software_engineering_professor.piece.PieceStore;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
@@ -18,6 +21,8 @@ public class GraphicsTest {
 
         Board board = new BoardImpl(40, 20);
         PositionValidation positionValidation = new PositionValidation(board);
+
+        PieceStore pieceStore = new PieceStore();
 
         Piece piece =
         PieceBuilder.create(0, new Point(15, 2)).add("x  ")
@@ -34,17 +39,28 @@ public class GraphicsTest {
                               .positionValidation(positionValidation)
                               .build();
 
-        board.addPiece(piece);
-        board.addPiece(piece2);
+        pieceStore.addPiece(piece);
+        pieceStore.addPiece(piece2);
+
+        PieceGenerator pieceGenerator = new PieceGenerator(pieceStore, new Random(), new Point(15, 4));
+
+//        board.addPiece(piece2);
 
         GeneralDrawer drawer = new DrawerFactory(screenOrigin).generalDrawer();
 
         ScreenManager screenManager = new ScreenManager();
 
         for(int i = 0; i < 100; i++) {
+            if(i % 4 == 0) {
+                board.addPiece(pieceGenerator.next());
+            }
+
             screenManager.add(drawer.getAllDrawPoints(board));
             screenManager.draw();
-            piece.moveHorizontal(1);
+
+            for(Piece p : board.getPieces()) {
+                p.moveDown(1);
+            }
 
 //            switch (i) {
 //                case 6:
@@ -61,7 +77,7 @@ public class GraphicsTest {
 //                    break;
 //            }
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
