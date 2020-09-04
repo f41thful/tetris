@@ -35,17 +35,15 @@ public class GameEngine {
         int iteration = 0;
 
         while(!isFinished) {
-            if (simulateIteration(iteration)) { break; }
-
+            isFinished = simulateIteration(iteration);
             iteration++;
         }
     }
 
     private boolean simulateIteration(int iteration) {
         if (!addValidPieceIfNoneSelected()) {
-            isFinished = true;
             System.out.println("Game finished");
-            return isFinished;
+            return true;
         }
 
         boolean allValid = processEvents(iteration);
