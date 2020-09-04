@@ -10,6 +10,7 @@ import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.BoardDrawer;
 import com.software_engineering_professor.graphics.lanterna.DrawPoints;
+import com.software_engineering_professor.graphics.lanterna.DrawerFactory;
 import com.software_engineering_professor.graphics.lanterna.PieceDrawer;
 import com.software_engineering_professor.piece.Piece;
 import com.software_engineering_professor.piece.PieceBuilder;
@@ -51,8 +52,9 @@ public class GraphicsTest {
         board.addPiece(piece);
         board.addPiece(piece2);
 
-        PieceDrawer pieceDrawer = new PieceDrawer(screenOrigin);
-        BoardDrawer boardDrawer = new BoardDrawer(screenOrigin);
+        DrawerFactory factory = new DrawerFactory(screenOrigin);
+        PieceDrawer pieceDrawer = factory.pieceDrawer();
+        BoardDrawer boardDrawer = factory.boardDrawer();
 
         for(int i = 0; i < 100; i++) {
             screen.clear();
