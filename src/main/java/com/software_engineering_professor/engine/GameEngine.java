@@ -35,33 +35,56 @@ public class GameEngine {
         int iteration = 0;
 
         while(!isFinished) {
-            if(!selectedPieceEventQueue.hasPieces()) {
-                Piece piece = pieceGenerator.next();
-                if(!piece.isValidPosition()) {
-                    System.out.println("Game is finished because piece " + piece + " could not be placed in a valid position.");
-                    isFinished = true;
-                    break;
-                }
-
-                board.addPiece(piece);
-                selectedPieceEventQueue.addIfNotPresent(piece);
+            if (!addValidPieceIfNoneSelected()) {
+                isFinished = true;
+                System.out.println("Game finished");
+                break;
             }
 
-            moveDownController.addEvents(iteration);
-            selectedPieceController.addEvents(iteration);
+            boolean allValid = processEvents(iteration);
 
-            boolean allValid = moveDownEventQueue.performEvents();
-            allValid &= selectedPieceEventQueue.performEvents();
-
-            if(!allValid) {
-                Collection<Integer> completedLines = board.detectAndDeleteCompletedLines();
-                if(!completedLines.isEmpty()) {
-                    int maxLine = completedLines.stream().max(Integer::compareTo).get();
-                    moveDownEventQueue.addIfNotPresent(board.getPiecesAboveOrInLineOrderedByHeightDesc(maxLine));
-                }
-            }
+            processCompletedLines(allValid);
 
             iteration++;
         }
+    }
+
+    private void processCompletedLines(boolean allValid) {
+        if(!allValid) {
+            Collection<Integer> completedLines = board.detectAndDeleteCompletedLines();
+            if(!completedLines.isEmpty()) {
+                int maxLine = completedLines.stream().max(Integer::compareTo).get();
+                moveDownEventQueue.addIfNotPresent(board.getPiecesAboveOrInLineOrderedByHeightDesc(maxLine));
+            }
+        }
+    }
+
+    private boolean processEvents(int iteration) {
+        moveDownController.addEvents(iteration);
+        selectedPieceController.addEvents(iteration);
+
+        boolean allValid = moveDownEventQueue.performEvents();
+        allValid &= selectedPieceEventQueue.performEvents();
+        return allValid;
+    }
+
+    /*
+    return false only when the piece was not valid.
+     */
+    private boolean addValidPieceIfNoneSelected() {
+        boolean isValid = true;
+
+        if(!selectedPieceEventQueue.hasPieces()) {
+            Piece piece = pieceGenerator.next();
+            if(!piece.isValidPosition()) {
+                System.out.println("Piece " + piece + " could not be placed in a valid position.");
+                isValid = false;
+            }
+
+            board.addPiece(piece);
+            selectedPieceEventQueue.addIfNotPresent(piece);
+        }
+
+        return isValid;
     }
 }
