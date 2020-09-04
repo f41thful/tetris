@@ -35,18 +35,23 @@ public class GameEngine {
         int iteration = 0;
 
         while(!isFinished) {
-            if (!addValidPieceIfNoneSelected()) {
-                isFinished = true;
-                System.out.println("Game finished");
-                break;
-            }
-
-            boolean allValid = processEvents(iteration);
-
-            processCompletedLines(allValid);
+            if (simulateIteration(iteration)) { break; }
 
             iteration++;
         }
+    }
+
+    private boolean simulateIteration(int iteration) {
+        if (!addValidPieceIfNoneSelected()) {
+            isFinished = true;
+            System.out.println("Game finished");
+            return isFinished;
+        }
+
+        boolean allValid = processEvents(iteration);
+
+        processCompletedLines(allValid);
+        return false;
     }
 
     private void processCompletedLines(boolean allValid) {
