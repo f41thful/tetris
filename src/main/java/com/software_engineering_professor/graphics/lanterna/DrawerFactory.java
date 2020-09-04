@@ -9,11 +9,15 @@ public class DrawerFactory {
         this.origin = origin;
     }
 
-    public BoardDrawer boardDrawer() {
+    public GeneralDrawer generalDrawer() {
+        return new GeneralDrawer(boardDrawer(), pieceDrawer());
+    }
+
+    private BoardDrawer boardDrawer() {
         return new BoardDrawer(origin);
     }
 
-    public PieceDrawer pieceDrawer() {
+    private PieceDrawer pieceDrawer() {
         return new PieceDrawer(origin);
     }
 }

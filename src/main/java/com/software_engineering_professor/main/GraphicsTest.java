@@ -6,6 +6,7 @@ import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.BoardDrawer;
 import com.software_engineering_professor.graphics.lanterna.DrawerFactory;
+import com.software_engineering_professor.graphics.lanterna.GeneralDrawer;
 import com.software_engineering_professor.graphics.lanterna.PieceDrawer;
 import com.software_engineering_professor.graphics.lanterna.ScreenManager;
 import com.software_engineering_professor.piece.Piece;
@@ -39,16 +40,14 @@ public class GraphicsTest {
         board.addPiece(piece);
         board.addPiece(piece2);
 
-        DrawerFactory factory = new DrawerFactory(screenOrigin);
-        PieceDrawer pieceDrawer = factory.pieceDrawer();
-        BoardDrawer boardDrawer = factory.boardDrawer();
+        GeneralDrawer drawer = new DrawerFactory(screenOrigin).generalDrawer();
 
         ScreenManager screenManager = new ScreenManager();
 
         for(int i = 0; i < 100; i++) {
-            screenManager.add(boardDrawer.getDrawPoints(board));
-            screenManager.add(pieceDrawer.getDrawPoints(piece));
-            screenManager.add(pieceDrawer.getDrawPoints(piece2));
+            screenManager.add(drawer.getDrawPoints(board));
+            screenManager.add(drawer.getDrawPoints(piece));
+            screenManager.add(drawer.getDrawPoints(piece2));
             screenManager.draw();
             piece.moveHorizontal(1);
 
