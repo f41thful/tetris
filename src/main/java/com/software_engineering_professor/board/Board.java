@@ -17,4 +17,5 @@ public interface Board {
     Collection<Point> getOccupiedPoints(Piece p);
     List<Piece> getPiecesAboveOrInLineOrderedByHeightDesc(int line);
     Collection<Integer> detectAndDeleteCompletedLines();
+    Collection<Piece> getPieces();
 }

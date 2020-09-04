@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class BoardImpl implements Board{
     private Collection<Piece> pieces;
-    private Collection<Piece> unmodifiablePieces;
     private int width;
     private int height;
     private Point upperLeftPoint = new Point(0, 0);
@@ -27,7 +26,6 @@ public class BoardImpl implements Board{
         this.width = width;
         this.height = height;
         pieces = new ArrayList<>();
-        unmodifiablePieces = Collections.unmodifiableCollection(pieces);
         boardLineCompletion = new BoardLineCompletion();
     }
 
@@ -68,6 +66,11 @@ public class BoardImpl implements Board{
         deleteCompletedLines(completedLines);
 
         return completedLines;
+    }
+
+    @Override
+    public Collection<Piece> getPieces() {
+        return Collections.unmodifiableCollection(pieces);
     }
 
     // The order will be based on position. Meaning, a piece closer to the bottom is considered to have more height.
