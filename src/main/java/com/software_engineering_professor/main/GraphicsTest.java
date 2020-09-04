@@ -1,34 +1,21 @@
 package com.software_engineering_professor.main;
 
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.board.BoardImpl;
 import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.BoardDrawer;
-import com.software_engineering_professor.graphics.lanterna.DrawPoints;
 import com.software_engineering_professor.graphics.lanterna.DrawerFactory;
 import com.software_engineering_professor.graphics.lanterna.PieceDrawer;
+import com.software_engineering_professor.graphics.lanterna.ScreenManager;
 import com.software_engineering_professor.piece.Piece;
 import com.software_engineering_professor.piece.PieceBuilder;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 
 public class GraphicsTest {
     public static void main(String[] args) throws IOException {
         Point screenOrigin = new Point(20, 2);
-        DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
-        Screen screen = null;
-
-        Terminal terminal = defaultTerminalFactory.createTerminal();
-        screen = new TerminalScreen(terminal);
-        screen.startScreen();
-        screen.setCursorPosition(null);
 
         Board board = new BoardImpl(40, 20);
         PositionValidation positionValidation = new PositionValidation(board);
@@ -56,12 +43,13 @@ public class GraphicsTest {
         PieceDrawer pieceDrawer = factory.pieceDrawer();
         BoardDrawer boardDrawer = factory.boardDrawer();
 
+        ScreenManager screenManager = new ScreenManager();
+
         for(int i = 0; i < 100; i++) {
-            screen.clear();
-            draw(screen, boardDrawer.getDrawPoints(board));
-            draw(screen, pieceDrawer.getDrawPoints(piece));
-            draw(screen, pieceDrawer.getDrawPoints(piece2));
-            screen.refresh();
+            screenManager.add(boardDrawer.getDrawPoints(board));
+            screenManager.add(pieceDrawer.getDrawPoints(piece));
+            screenManager.add(pieceDrawer.getDrawPoints(piece2));
+            screenManager.draw();
             piece.moveHorizontal(1);
 
 //            switch (i) {
@@ -85,17 +73,5 @@ public class GraphicsTest {
             }
         }
 
-    }
-
-    private static void draw(Screen screen, Collection<DrawPoints> drawPointss) {
-        for(DrawPoints drawPoints : drawPointss) {
-            draw(screen, drawPoints);
-        }
-    }
-
-    private static void draw(Screen screen, DrawPoints drawPoints) {
-        for(Point p : drawPoints.points) {
-            screen.setCharacter(p.x, p.y, drawPoints.character);
-        }
     }
 }
