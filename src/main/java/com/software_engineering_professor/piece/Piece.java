@@ -112,6 +112,10 @@ public class Piece {
         return position.clone();
     }
 
+    public void setPosition(Point p) {
+        this.position = p;
+    }
+
     public Collection<Point> getLocalPoints() {
         return CollectionUtil.deepCopy(occupiedPoints);
     }
@@ -136,6 +140,10 @@ public class Piece {
 
     public boolean isValidPosition() {
         return positionValidation.isValid(this, getGlobalPoints());
+    }
+
+    public Piece clone() {
+        return new Piece(type, position.clone(), getLocalPoints(), positionValidation);
     }
 
     private void validatePoint(Point p, String msg) {

@@ -34,7 +34,6 @@ public class GraphicsTest {
                               .positionValidation(positionValidation)
                               .build();
 
-
         board.addPiece(piece);
         board.addPiece(piece2);
 

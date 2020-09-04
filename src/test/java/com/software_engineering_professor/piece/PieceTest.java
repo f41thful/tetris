@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -60,5 +61,23 @@ class PieceTest {
             assertNotEquals(2, p.y);
             assertTrue(localPoints.contains(p));
         }
+    }
+
+    @Test
+    public void givenClone_newPieceIsRetrieved() {
+        Piece clone = piece.clone();
+
+        assertFalse(piece == clone);
+        assertFalse(piece.getPosition() == clone.getPosition());
+        assertEquals(piece.getPosition(), clone.getPosition());
+        assertEquals(piece.getWidth(), clone.getWidth());
+        assertEquals(piece.getHeight(), clone.getHeight());
+
+        Collection<Point> piecePoints = piece.getLocalPoints();
+        Collection<Point> clonePoints = clone.getLocalPoints();
+
+        assertEquals(piecePoints.size(), clonePoints.size());
+        assertTrue(piecePoints.containsAll(clonePoints));
+        assertTrue(clonePoints.containsAll(piecePoints));
     }
 }
