@@ -20,6 +20,7 @@ public class IterationControl implements IterationListener {
     public void blockUntilNextIterationCanStart() throws InterruptedException {
         long elapsedNs = finishTimeNs - startTimeNs;
         float remainingNs = periodNs - elapsedNs;
+        printTrance(elapsedNs, remainingNs);
         if(remainingNs >= 0) {
             System.out.println("Wait " + seconds(remainingNs) + " until next iteration.");
             Thread.sleep(millis((long) remainingNs));
@@ -29,6 +30,7 @@ public class IterationControl implements IterationListener {
     @Override
     public void start(int iteration) {
         startTimeNs = getCurrentTime();
+        System.out.println("----------------------------------------------------");
         System.out.println("Iteration " + iteration + " starts at " + startTimeNs);
     }
 
@@ -36,6 +38,7 @@ public class IterationControl implements IterationListener {
     public void finish(int iteration) {
         finishTimeNs = getCurrentTime();
         System.out.println("Iteration " + iteration + " finishes at " + finishTimeNs);
+        System.out.println("----------------------------------------------------");
     }
 
     private long getCurrentTime() {
@@ -43,7 +46,7 @@ public class IterationControl implements IterationListener {
     }
 
     private long nanos(float seconds) {
-        return (long) seconds * 1_000_000_000;
+        return (long) (seconds * 1_000_000_000);
     }
 
     private long millis(long nanos) {
@@ -52,5 +55,16 @@ public class IterationControl implements IterationListener {
 
     private float seconds(float nanos) {
         return nanos / 1_000_000_000;
+    }
+
+    private void printTrance(long elapsedNs, float remainingNs) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Elapsed time ");
+        sb.append(seconds(elapsedNs));
+        sb.append(" seconds. Remaining time ");
+        sb.append(seconds(remainingNs));
+        sb.append(" seconds.");
+
+        System.out.println(sb.toString());
     }
 }
