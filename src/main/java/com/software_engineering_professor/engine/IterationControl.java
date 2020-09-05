@@ -4,8 +4,9 @@ import com.software_engineering_professor.engine.iteration_listener.IterationLis
 
 public class IterationControl implements IterationListener {
     private float period; // period in seconds
-    private long startTime;
-    private long finishTime;
+    private long periodNs;
+    private long startTimeNs;
+    private long finishTimeNs;
 
     public IterationControl(float period) {
         if(period <= 0) {
@@ -13,23 +14,43 @@ public class IterationControl implements IterationListener {
         }
 
         this.period = period;
+        periodNs = nanos(this.period);
     }
 
     public void blockUntilNextIterationCanStart() throws InterruptedException {
-        long elapsed = finishTime - startTime;
-        float remaining = period - elapsed;
-        if(remaining >= 0) {
-            Thread.sleep((long) (remaining * 1000));
+        long elapsedNs = finishTimeNs - startTimeNs;
+        float remainingNs = periodNs - elapsedNs;
+        if(remainingNs >= 0) {
+            System.out.println("Wait " + seconds(remainingNs) + " until next iteration.");
+            Thread.sleep(millis((long) remainingNs));
         }
     }
 
     @Override
     public void start(int iteration) {
-        startTime = System.currentTimeMillis();
+        startTimeNs = getCurrentTime();
+        System.out.println("Iteration " + iteration + " starts at " + startTimeNs);
     }
 
     @Override
     public void finish(int iteration) {
-        finishTime = System.currentTimeMillis();
+        finishTimeNs = getCurrentTime();
+        System.out.println("Iteration " + iteration + " finishes at " + finishTimeNs);
+    }
+
+    private long getCurrentTime() {
+        return System.nanoTime();
+    }
+
+    private long nanos(float seconds) {
+        return (long) seconds * 1_000_000_000;
+    }
+
+    private long millis(long nanos) {
+        return nanos / 1_000_000;
+    }
+
+    private float seconds(float nanos) {
+        return nanos / 1_000_000_000;
     }
 }
