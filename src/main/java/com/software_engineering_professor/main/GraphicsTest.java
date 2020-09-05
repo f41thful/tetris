@@ -7,7 +7,6 @@ import com.software_engineering_professor.engine.PieceGenerator;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
 import com.software_engineering_professor.piece.Piece;
-import com.software_engineering_professor.piece.PieceBuilder;
 import com.software_engineering_professor.piece.PieceLoader;
 import com.software_engineering_professor.piece.PieceStore;
 
