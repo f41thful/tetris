@@ -3,8 +3,10 @@ package com.software_engineering_professor.engine;
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.engine.controller.Controller;
 import com.software_engineering_professor.engine.event.EventQueue;
+import com.software_engineering_professor.engine.iteration_listener.IterationListener;
 import com.software_engineering_professor.piece.Piece;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,16 +17,20 @@ public class GameEngine {
     private EventQueue selectedPieceEventQueue; //for player actions
     private Controller moveDownController;
     private Controller selectedPieceController;
+    private IterationControl iterationControl;
+
+    private Collection<IterationListener> iterationListeners;
 
     public GameEngine(Board board, PieceGenerator pieceGenerator,
                       EventQueue moveDownEventQueue, EventQueue selectedPieceEventQueue, Controller moveDownController,
-                      Controller selectedPieceController) {
-        Objects.requireNonNull(this.board);
-        Objects.requireNonNull(this.pieceGenerator);
-        Objects.requireNonNull(this.moveDownEventQueue);
-        Objects.requireNonNull(this.selectedPieceEventQueue);
-        Objects.requireNonNull(this.moveDownController);
-        Objects.requireNonNull(this.selectedPieceController);
+                      Controller selectedPieceController, IterationControl iterationControl) {
+        Objects.requireNonNull(board);
+        Objects.requireNonNull(pieceGenerator);
+        Objects.requireNonNull(moveDownEventQueue);
+        Objects.requireNonNull(selectedPieceEventQueue);
+        Objects.requireNonNull(moveDownController);
+        Objects.requireNonNull(selectedPieceController);
+        Objects.requireNonNull(iterationControl);
 
         this.board = board;
         this.pieceGenerator = pieceGenerator;
@@ -32,17 +38,33 @@ public class GameEngine {
         this.selectedPieceEventQueue = selectedPieceEventQueue;
         this.moveDownController = moveDownController;
         this.selectedPieceController = selectedPieceController;
+        this.iterationControl = iterationControl;
+
+        iterationListeners = new ArrayList<>();
+        iterationListeners.add(iterationControl);
     }
 
     private boolean isFinished;
 
-    public void start() {
+    public void start() throws InterruptedException {
         int iteration = 0;
 
         while(!isFinished) {
+            notifyStart(iteration);
             isFinished = simulateIteration(iteration);
+            notifyFinish(iteration);
+
             iteration++;
+            iterationControl.blockUntilNextIterationCanStart();
         }
+    }
+
+    private void notifyStart(int iteration) {
+        iterationListeners.forEach(listener -> listener.start(iteration));
+    }
+
+    private void notifyFinish(int iteration) {
+        iterationListeners.forEach(listener -> listener.finish(iteration));
     }
 
     private boolean simulateIteration(int iteration) {
