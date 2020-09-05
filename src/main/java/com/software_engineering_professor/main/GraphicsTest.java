@@ -23,7 +23,7 @@ public class GraphicsTest {
         PieceStore pieceStore = new PieceStore();
         PieceLoader pieceLoader = new PieceLoader(positionValidation);
 
-        pieceLoader.getDefaultPieces().forEach(pieceStore::addPiece);
+        pieceLoader.getPieces().forEach(pieceStore::addPiece);
 
         PieceGenerator pieceGenerator = new PieceGenerator(pieceStore, new Random(), new Point(15, 4));
 

@@ -21,8 +21,10 @@ public class TetrisGame {
         board = new BoardImpl(width, height);
         PieceLoader pieceLoader = new PieceLoader(new PositionValidation(board));
 
+        checkIfTheLongestPieceFitInTheMiddleOfTheBoard(width, pieceLoader);
+
         PieceStore pieceStore = new PieceStore();
-        pieceLoader.getDefaultPieces().forEach(pieceStore::addPiece);
+        pieceLoader.getPieces().forEach(pieceStore::addPiece);
 
         gameEngine = new GameEngineFactory().create(board, pieceStore, ITERATION_PERIOD_SC, MOVE_DOWN_PERIOD, selectedPieceController);
     }
@@ -38,4 +40,15 @@ public class TetrisGame {
     public void addIterationListener(IterationListener iterationListener) {
         gameEngine.addIterationListener(iterationListener);
     }
+
+    // when a piece is too long and place in the middle, even if you have room for it to go down it can collide with the
+    // walls.
+    private void checkIfTheLongestPieceFitInTheMiddleOfTheBoard(int width, PieceLoader pieceLoader) {
+        int maxWidth = pieceLoader.getMaxWidth();
+        if(width < 2 * maxWidth) {
+            throw new IllegalStateException("Board width has to be enough to hold the longest piece when placed" +
+                    " in the middle of the board. Width is " + width + ", the longest piece is " + maxWidth);
+        }
+    }
+
 }

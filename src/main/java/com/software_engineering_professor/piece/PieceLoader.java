@@ -8,10 +8,21 @@ import java.util.Objects;
 
 public class PieceLoader {
     private PositionValidation positionValidation;
+    private Collection<Piece> pieces;
 
     public PieceLoader(PositionValidation positionValidation) {
         Objects.requireNonNull(positionValidation);
         this.positionValidation = positionValidation;
+    }
+
+    public Collection<Piece> getPieces() {
+        if(pieces == null) {
+            pieces = getDefaultPieces();
+        } else {
+            System.out.println("Pieces not loaded again.");
+        }
+
+        return pieces;
     }
 
     public Collection<Piece> getDefaultPieces() {
@@ -24,6 +35,10 @@ public class PieceLoader {
             piece5(),
             piece6()
         );
+    }
+
+    public int getMaxWidth() {
+        return getPieces().stream().mapToInt(Piece::getWidth).max().getAsInt();
     }
 
     private Piece piece0() {
