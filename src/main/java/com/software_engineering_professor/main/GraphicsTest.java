@@ -28,7 +28,7 @@ public class GraphicsTest {
         PieceGenerator pieceGenerator = new PieceGenerator(pieceStore, new Random(), new Point(15, 4));
 
 
-        TetrisGUI gui = new TetrisGUI(screenOrigin);
+        TetrisGUI gui = new TetrisGUI(screenOrigin, 50, 50);
 
         for(int i = 0; i < 100; i++) {
             if(i % 4 == 0) {

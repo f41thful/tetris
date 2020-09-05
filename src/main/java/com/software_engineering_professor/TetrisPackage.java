@@ -8,13 +8,14 @@ import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
 import java.io.IOException;
 
 public class TetrisPackage {
+    private static final int EXTRA_SPACE = 15;
     private static final Point GUI_ORIGIN = new Point(3, 3);
 
     private TetrisGame tetrisGame;
     private TetrisGUI tetrisGUI;
 
     public TetrisPackage(int width, int height) throws IOException {
-        tetrisGUI = new TetrisGUI(GUI_ORIGIN);
+        tetrisGUI = new TetrisGUI(GUI_ORIGIN, width + EXTRA_SPACE, height + EXTRA_SPACE);
 
         InputController inputController = new InputController(tetrisGUI);
         tetrisGame = new TetrisGame(width, height, inputController);

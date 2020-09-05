@@ -1,5 +1,6 @@
 package com.software_engineering_professor.graphics.lanterna;
 
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
@@ -9,7 +10,6 @@ import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.drawer.DrawPoints;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +22,9 @@ public class ScreenManager {
     private List<DrawPoints> toDraw;
     private Terminal terminal;
 
-    public ScreenManager() throws IOException {
+    public ScreenManager(int width, int height) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
+        defaultTerminalFactory.setInitialTerminalSize(new TerminalSize(width, height));
 
         terminal = defaultTerminalFactory.createTerminal();
         closeOnExitInCaseOfASwingTerminal(terminal);

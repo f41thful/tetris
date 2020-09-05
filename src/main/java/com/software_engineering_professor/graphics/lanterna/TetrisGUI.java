@@ -13,9 +13,9 @@ public class TetrisGUI {
     private ScreenManager screenManager;
     private GeneralDrawer generalDrawer;
 
-    public TetrisGUI(Point origin) throws IOException {
+    public TetrisGUI(Point origin, int width, int height) throws IOException {
         Objects.requireNonNull(origin);
-        screenManager = new ScreenManager();
+        screenManager = new ScreenManager(width + origin.x, height + origin.y);
         generalDrawer = new DrawerFactory(origin).generalDrawer();
     }
 
