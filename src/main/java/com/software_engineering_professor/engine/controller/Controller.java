@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface Controller {
     void setEventQueue(EventQueue eventQueue);
-    void addEvents(int iteration) throws IOException;
+    void addEvents(int iteration);
 }
