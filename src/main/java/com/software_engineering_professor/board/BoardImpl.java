@@ -32,7 +32,7 @@ public class BoardImpl implements Board{
     @Override
     public void addPiece(Piece p) {
         if(p.getHeight() > height || p.getWidth() > width) {
-            throw new IllegalArgumentException("The piece dimensions cannot be greater than board dimensions (" + width + ", " + height + ")");
+            throw new IllegalArgumentException("The piece dimensions cannot be greater than getBoard dimensions (" + width + ", " + height + ")");
         }
         pieces.add(p);
     }

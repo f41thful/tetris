@@ -5,6 +5,7 @@ import com.software_engineering_professor.board.BoardImpl;
 import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.engine.GameEngine;
 import com.software_engineering_professor.engine.GameEngineFactory;
+import com.software_engineering_professor.engine.iteration_listener.IterationListener;
 import com.software_engineering_professor.piece.PieceLoader;
 import com.software_engineering_professor.piece.PieceStore;
 
@@ -29,7 +30,11 @@ public class TetrisGame {
         gameEngine.start();
     }
 
-    public Board board() {
+    public Board getBoard() {
         return board;
+    }
+
+    public void addIterationListener(IterationListener iterationListener) {
+        gameEngine.addIterationListener(iterationListener);
     }
 }
