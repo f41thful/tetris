@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public class TetrisEntrypoint {
     public static void main(String[] args) throws IOException, InterruptedException {
-        new TetrisPackage(40, 20).start();
+        new TetrisPackage(40, 19).start();
     }
 }
