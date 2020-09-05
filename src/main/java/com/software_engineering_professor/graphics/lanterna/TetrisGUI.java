@@ -1,5 +1,6 @@
 package com.software_engineering_professor.graphics.lanterna;
 
+import com.googlecode.lanterna.input.KeyStroke;
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.drawer.DrawerFactory;
@@ -21,5 +22,9 @@ public class TetrisGUI {
     public void draw(Board board) throws IOException {
         screenManager.add(generalDrawer.getAllDrawPoints(board));
         screenManager.draw();
+    }
+
+    public KeyStroke pollInput() throws IOException {
+        return screenManager.pollInput();
     }
 }

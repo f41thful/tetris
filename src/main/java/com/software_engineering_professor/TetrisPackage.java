@@ -16,7 +16,7 @@ public class TetrisPackage {
     public TetrisPackage(int width, int height) throws IOException {
         tetrisGUI = new TetrisGUI(GUI_ORIGIN);
 
-        InputController inputController = new InputController();
+        InputController inputController = new InputController(tetrisGUI);
         tetrisGame = new TetrisGame(width, height, inputController);
 
         tetrisGame.addIterationListener(getDrawIterationListener());

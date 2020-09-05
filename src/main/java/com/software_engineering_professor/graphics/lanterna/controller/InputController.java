@@ -2,16 +2,14 @@ package com.software_engineering_professor.graphics.lanterna.controller;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.terminal.Terminal;
 import com.software_engineering_professor.engine.controller.Controller;
 import com.software_engineering_professor.engine.event.Event;
 import com.software_engineering_professor.engine.event.EventQueue;
-import com.software_engineering_professor.engine.event.EventType;
+import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.googlecode.lanterna.input.KeyType.*;
 import static com.software_engineering_professor.engine.event.EventType.MOVE_DOWN;
 import static com.software_engineering_professor.engine.event.EventType.MOVE_HORIZONTAL;
 import static com.software_engineering_professor.engine.event.EventType.ROTATE_LEFT;
@@ -20,11 +18,11 @@ public class InputController implements Controller {
     private static final int MAX_NUMBER_OF_EVENTS_PER_CALL = 10;
 
     private EventQueue eventQueue;
-    private Terminal terminal;
+    private TetrisGUI keyStrokeProducer;
 
-    public InputController(Terminal terminal) {
-        Objects.requireNonNull(terminal);
-        this.terminal = terminal;
+    public InputController(TetrisGUI keyStrokeProducer) {
+        Objects.requireNonNull(keyStrokeProducer);
+        this.keyStrokeProducer = keyStrokeProducer;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class InputController implements Controller {
     public void addEvents(int iteration) {
         for(int i = 0; i < MAX_NUMBER_OF_EVENTS_PER_CALL; i++) {
             try {
-                KeyStroke keyStroke = terminal.pollInput();
+                KeyStroke keyStroke = keyStrokeProducer.pollInput();
                 Event event = getEvent(keyStroke);
                 if(event != null) {
                     eventQueue.addEvent(event);

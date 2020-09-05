@@ -1,5 +1,6 @@
 package com.software_engineering_professor.graphics.lanterna;
 
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -15,11 +16,12 @@ import java.util.List;
 public class ScreenManager {
     private Screen screen;
     private List<DrawPoints> toDraw;
+    private Terminal terminal;
 
     public ScreenManager() throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
 
-        Terminal terminal = defaultTerminalFactory.createTerminal();
+        terminal = defaultTerminalFactory.createTerminal();
         screen = new TerminalScreen(terminal);
         screen.startScreen();
         screen.setCursorPosition(null);
@@ -44,6 +46,10 @@ public class ScreenManager {
         }
         screen.refresh();
         toDraw.clear();
+    }
+
+    public KeyStroke pollInput() throws IOException {
+        return terminal.pollInput();
     }
 
 }
