@@ -1,6 +1,6 @@
 package com.software_engineering_professor;
 
-import com.software_engineering_professor.engine.controller.InputController;
+import com.software_engineering_professor.graphics.lanterna.controller.InputController;
 import com.software_engineering_professor.engine.iteration_listener.IterationListener;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
