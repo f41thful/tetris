@@ -1,27 +1,32 @@
 package com.software_engineering_professor.engine;
 
 import com.software_engineering_professor.board.Board;
-import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.engine.controller.Controller;
 import com.software_engineering_professor.engine.event.EventQueue;
 import com.software_engineering_professor.piece.Piece;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class GameEngine {
     private Board board;
-    private PositionValidation positionValidation;
     private PieceGenerator pieceGenerator;
     private EventQueue moveDownEventQueue;
     private EventQueue selectedPieceEventQueue; //for player actions
     private Controller moveDownController;
     private Controller selectedPieceController;
 
-    public GameEngine(Board board, PositionValidation positionValidation, PieceGenerator pieceGenerator,
+    public GameEngine(Board board, PieceGenerator pieceGenerator,
                       EventQueue moveDownEventQueue, EventQueue selectedPieceEventQueue, Controller moveDownController,
                       Controller selectedPieceController) {
+        Objects.requireNonNull(this.board);
+        Objects.requireNonNull(this.pieceGenerator);
+        Objects.requireNonNull(this.moveDownEventQueue);
+        Objects.requireNonNull(this.selectedPieceEventQueue);
+        Objects.requireNonNull(this.moveDownController);
+        Objects.requireNonNull(this.selectedPieceController);
+
         this.board = board;
-        this.positionValidation = positionValidation;
         this.pieceGenerator = pieceGenerator;
         this.moveDownEventQueue = moveDownEventQueue;
         this.selectedPieceEventQueue = selectedPieceEventQueue;

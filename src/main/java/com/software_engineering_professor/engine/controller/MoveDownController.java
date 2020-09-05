@@ -2,7 +2,6 @@ package com.software_engineering_professor.engine.controller;
 
 import com.software_engineering_professor.engine.event.Event;
 import com.software_engineering_professor.engine.event.EventQueue;
-import com.software_engineering_professor.engine.event.EventType;
 
 import java.util.Objects;
 
