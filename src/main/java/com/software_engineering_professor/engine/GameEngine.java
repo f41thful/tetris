@@ -59,6 +59,11 @@ public class GameEngine {
         }
     }
 
+    public void addIterationListener(IterationListener iterationListener) {
+        Objects.requireNonNull(iterationListener);
+        iterationListeners.add(iterationListener);
+    }
+
     private void notifyStart(int iteration) {
         iterationListeners.forEach(listener -> listener.start(iteration));
     }
