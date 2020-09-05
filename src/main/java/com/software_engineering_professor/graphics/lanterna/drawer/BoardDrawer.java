@@ -32,7 +32,7 @@ public class BoardDrawer extends Drawer{
 
         Collection<Point> pointsWidth = new ArrayList<>();
         for(int i = -1; i <= width; i++) {
-            pointsWidth.add(new Point(i, height + 1));
+            pointsWidth.add(new Point(i, height));
         }
 
         points.add(new DrawPoints(transformToOrigin(pointsWidth), getHorizontalWallCharacter()));
