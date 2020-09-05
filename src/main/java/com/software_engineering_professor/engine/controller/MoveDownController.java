@@ -23,6 +23,9 @@ public class MoveDownController implements Controller{
 
     @Override
     public void setEventQueue(EventQueue eventQueue) {
+        if(this.eventQueue != null) {
+            throw new IllegalStateException("Controller " + this + " already has an event queue.");
+        }
         Objects.requireNonNull(eventQueue);
         this.eventQueue = eventQueue;
     }
