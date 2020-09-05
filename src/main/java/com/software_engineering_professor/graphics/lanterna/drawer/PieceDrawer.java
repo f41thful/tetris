@@ -1,4 +1,4 @@
-package com.software_engineering_professor.graphics.lanterna;
+package com.software_engineering_professor.graphics.lanterna.drawer;
 
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
@@ -7,7 +7,7 @@ import com.software_engineering_professor.piece.Piece;
 
 import java.util.Objects;
 
-public class PieceDrawer extends Drawer{
+public class PieceDrawer extends Drawer {
 
     public PieceDrawer(Point origin) {
         super(origin);

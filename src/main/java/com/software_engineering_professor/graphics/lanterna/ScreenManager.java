@@ -5,6 +5,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.software_engineering_professor.geom.Point;
+import com.software_engineering_professor.graphics.lanterna.drawer.DrawPoints;
 
 import java.io.IOException;
 import java.util.ArrayList;

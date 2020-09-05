@@ -1,4 +1,4 @@
-package com.software_engineering_professor.graphics.lanterna;
+package com.software_engineering_professor.graphics.lanterna.drawer;
 
 import com.software_engineering_professor.board.Board;
 import com.software_engineering_professor.piece.Piece;

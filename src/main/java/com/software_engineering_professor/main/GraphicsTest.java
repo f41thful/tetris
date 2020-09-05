@@ -5,8 +5,9 @@ import com.software_engineering_professor.board.BoardImpl;
 import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.engine.PieceGenerator;
 import com.software_engineering_professor.geom.Point;
-import com.software_engineering_professor.graphics.lanterna.DrawerFactory;
-import com.software_engineering_professor.graphics.lanterna.GeneralDrawer;
+import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
+import com.software_engineering_professor.graphics.lanterna.drawer.DrawerFactory;
+import com.software_engineering_professor.graphics.lanterna.drawer.GeneralDrawer;
 import com.software_engineering_professor.graphics.lanterna.ScreenManager;
 import com.software_engineering_professor.piece.Piece;
 import com.software_engineering_professor.piece.PieceBuilder;
@@ -46,17 +47,14 @@ public class GraphicsTest {
 
 //        board.addPiece(piece2);
 
-        GeneralDrawer drawer = new DrawerFactory(screenOrigin).generalDrawer();
-
-        ScreenManager screenManager = new ScreenManager();
+        TetrisGUI gui = new TetrisGUI(screenOrigin);
 
         for(int i = 0; i < 100; i++) {
             if(i % 4 == 0) {
                 board.addPiece(pieceGenerator.next());
             }
 
-            screenManager.add(drawer.getAllDrawPoints(board));
-            screenManager.draw();
+            gui.draw(board);
 
             for(Piece p : board.getPieces()) {
                 p.moveDown(1);
