@@ -5,13 +5,17 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
 import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.drawer.DrawPoints;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class ScreenManager {
     private Screen screen;
@@ -22,6 +26,7 @@ public class ScreenManager {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
 
         terminal = defaultTerminalFactory.createTerminal();
+        closeOnExitInCaseOfASwingTerminal(terminal);
         screen = new TerminalScreen(terminal);
         screen.startScreen();
         screen.setCursorPosition(null);
@@ -52,4 +57,9 @@ public class ScreenManager {
         return terminal.pollInput();
     }
 
+    private void closeOnExitInCaseOfASwingTerminal(Terminal terminal) {
+        if(terminal instanceof SwingTerminalFrame) {
+            ((SwingTerminalFrame) terminal).setDefaultCloseOperation(EXIT_ON_CLOSE);
+        }
+    }
 }
