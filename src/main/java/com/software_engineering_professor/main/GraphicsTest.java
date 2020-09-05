@@ -8,6 +8,7 @@ import com.software_engineering_professor.geom.Point;
 import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
 import com.software_engineering_professor.piece.Piece;
 import com.software_engineering_professor.piece.PieceBuilder;
+import com.software_engineering_professor.piece.PieceLoader;
 import com.software_engineering_professor.piece.PieceStore;
 
 import java.io.IOException;
@@ -21,28 +22,12 @@ public class GraphicsTest {
         PositionValidation positionValidation = new PositionValidation(board);
 
         PieceStore pieceStore = new PieceStore();
+        PieceLoader pieceLoader = new PieceLoader(positionValidation);
 
-        Piece piece =
-        PieceBuilder.create(0, new Point(15, 2)).add("x  ")
-                              .add("x  ")
-                              .add("xx ")
-                              .positionValidation(positionValidation)
-                              .build();
-
-        Piece piece2 =
-        PieceBuilder.create(1, new Point(15, 7))
-                              .add("x  ")
-                              .add("x  ")
-                              .add("xx ")
-                              .positionValidation(positionValidation)
-                              .build();
-
-        pieceStore.addPiece(piece);
-        pieceStore.addPiece(piece2);
+        pieceLoader.getDefaultPieces().forEach(pieceStore::addPiece);
 
         PieceGenerator pieceGenerator = new PieceGenerator(pieceStore, new Random(), new Point(15, 4));
 
-//        board.addPiece(piece2);
 
         TetrisGUI gui = new TetrisGUI(screenOrigin);
 
@@ -57,20 +42,6 @@ public class GraphicsTest {
                 p.moveDown(1);
             }
 
-//            switch (i) {
-//                case 6:
-//                    piece.delete(Collections.singletonList(new Point(0, 0)));
-//                    break;
-//                case 8:
-//                    piece.delete(Collections.singletonList(new Point(0, 1)));
-//                    break;
-//                case 10:
-//                    piece.delete(Collections.singletonList(new Point(0, 2)));
-//                    break;
-//                case 14:
-//                    piece.delete(Collections.singletonList(new Point(1, 2)));
-//                    break;
-//            }
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
