@@ -46,6 +46,11 @@ public class GameEngine {
     }
 
     private boolean simulateIteration(int iteration) {
+        if(isFinished) {
+            System.out.println("Trying to simulate when the game is already finished.");
+            return true;
+        }
+
         if (!addValidPieceIfNoneSelected()) {
             System.out.println("Game finished");
             return true;
