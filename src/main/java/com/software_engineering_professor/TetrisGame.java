@@ -5,6 +5,7 @@ import com.software_engineering_professor.board.BoardImpl;
 import com.software_engineering_professor.board.PositionValidation;
 import com.software_engineering_professor.engine.GameEngine;
 import com.software_engineering_professor.engine.GameEngineFactory;
+import com.software_engineering_professor.engine.controller.Controller;
 import com.software_engineering_professor.engine.iteration_listener.IterationListener;
 import com.software_engineering_professor.piece.PieceLoader;
 import com.software_engineering_professor.piece.PieceStore;
@@ -16,14 +17,14 @@ public class TetrisGame {
     private Board board;
     private GameEngine gameEngine;
 
-    public TetrisGame(int width, int height) {
+    public TetrisGame(int width, int height, Controller selectedPieceController) {
         board = new BoardImpl(width, height);
         PieceLoader pieceLoader = new PieceLoader(new PositionValidation(board));
 
         PieceStore pieceStore = new PieceStore();
         pieceLoader.getDefaultPieces().forEach(pieceStore::addPiece);
 
-        gameEngine = new GameEngineFactory().create(board, pieceStore, ITERATION_PERIOD_SC, MOVE_DOWN_PERIOD);
+        gameEngine = new GameEngineFactory().create(board, pieceStore, ITERATION_PERIOD_SC, MOVE_DOWN_PERIOD, selectedPieceController);
     }
 
     public void start() throws InterruptedException {
