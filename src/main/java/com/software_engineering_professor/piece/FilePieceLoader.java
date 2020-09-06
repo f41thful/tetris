@@ -1,5 +1,7 @@
 package com.software_engineering_professor.piece;
 
+import com.software_engineering_professor.board.PositionValidation;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +15,17 @@ public class FilePieceLoader {
     private static final String DEFAULT_PATH = "/extra-pieces/";
 
     private final String path;
+    private final PositionValidation positionValidation;
 
-    public FilePieceLoader() {
-        this(DEFAULT_PATH);
+    public FilePieceLoader(PositionValidation positionValidation) {
+        this(DEFAULT_PATH, positionValidation);
     }
 
-    public FilePieceLoader(String path) {
+    public FilePieceLoader(String path, PositionValidation positionValidation) {
         Objects.requireNonNull(path);
+        Objects.requireNonNull(positionValidation);
         this.path = path;
+        this.positionValidation = positionValidation;
     }
 
     public Collection<Piece> getPieces(int nextType) {
@@ -52,7 +57,7 @@ public class FilePieceLoader {
 
     private Piece createPiece(int nextType, String fileName) throws IOException {
         List<String> lines = readLines(absPath(fileName));
-        PieceBuilder builder = PieceBuilder.create(nextType);
+        PieceBuilder builder = PieceBuilder.create(nextType).positionValidation(positionValidation);
         lines.stream().forEach(builder::add);
 
         return builder.build();

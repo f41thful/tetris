@@ -15,7 +15,7 @@ public class PieceLoader {
     public PieceLoader(PositionValidation positionValidation) {
         Objects.requireNonNull(positionValidation);
         this.positionValidation = positionValidation;
-        filePieceLoader = new FilePieceLoader();
+        filePieceLoader = new FilePieceLoader(positionValidation);
     }
 
     public Collection<Piece> getPieces() {

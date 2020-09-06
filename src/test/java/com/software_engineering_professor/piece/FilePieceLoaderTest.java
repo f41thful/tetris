@@ -1,5 +1,7 @@
 package com.software_engineering_professor.piece;
 
+import com.software_engineering_professor.board.BoardImpl;
+import com.software_engineering_professor.board.PositionValidation;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -11,22 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FilePieceLoaderTest {
+    private PositionValidation pv = new PositionValidation(new BoardImpl(10, 10));
     @Test
     public void givenDirDoesNotExist_thenNoExtraPieces() {
-        Collection<Piece> pieces = new FilePieceLoader("adsfdfjskjfskdj").getPieces(0);
+        Collection<Piece> pieces = new FilePieceLoader("adsfdfjskjfskdj", pv).getPieces(0);
         assertEquals(0, pieces.size());
     }
 
     @Test
     public void givenDirHasNoFiles_thenNoExtraPieces() {
-        Collection<Piece> pieces = new FilePieceLoader("/extra-pieces-empty/").getPieces(0);
+        Collection<Piece> pieces = new FilePieceLoader("/extra-pieces-empty/", pv).getPieces(0);
         assertEquals(0, pieces.size());
     }
 
     @Test
     public void givenDirHasValidFiles_thenReturnThosePieces() {
         Collection<Piece> expected = Arrays.asList(extraPiece0(), piece0(), piece0Txt(), piece1());
-        Collection<Piece> pieces = new FilePieceLoader().getPieces(0);
+        Collection<Piece> pieces = new FilePieceLoader(pv).getPieces(0);
         assertEquals(4, pieces.size());
         expected.forEach(p -> assertTrue(contains(pieces, p)));
 
