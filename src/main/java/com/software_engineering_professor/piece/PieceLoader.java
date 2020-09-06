@@ -2,6 +2,7 @@ package com.software_engineering_professor.piece;
 
 import com.software_engineering_professor.board.PositionValidation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -29,15 +30,15 @@ public class PieceLoader {
     }
 
     public Collection<Piece> getDefaultPieces() {
-        return Arrays.asList(
-            piece0(),
-            piece1(),
-            piece2(),
-            piece3(),
-            piece4(),
-            piece5(),
-            piece6()
-        );
+        return new ArrayList<>(Arrays.asList(
+                piece0(),
+                piece1(),
+                piece2(),
+                piece3(),
+                piece4(),
+                piece5(),
+                piece6()
+        ));
     }
 
     public int getMaxWidth() {
