@@ -11,6 +11,10 @@ You can execute it from the terminal or directly from IntelliJ
 **java -cp tetris2-1.0-SNAPSHOT-jar-with-dependencies.jar:. com.software_engineering_professor.main.TetrisEntrypoint width height**
 width and height, both as a package, are optional parameters (0 or 2 parameters can be passed but not 1).
 
+# How to use it
+In order to move the piece, just use the arrow keys (left, right and down).
+To rotate, you can use any character key.
+
 ## Add new pieces
 In order to add new pieces just create a new directory called "extra-pieces" and put them there under the name you want. 
 Each line in the file is a line in the piece. Each column is a column.
