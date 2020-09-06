@@ -11,9 +11,11 @@ import java.util.Objects;
 public class EventQueue {
     private List<Piece> pieces;
     private List<Event> events;
+    private EventComparator eventComparator;
 
     public EventQueue(List<Piece> pieces) {
         Objects.requireNonNull(pieces);
+        eventComparator = new EventComparator();
         this.pieces = pieces;
 
         events = new ArrayList<>();
@@ -22,10 +24,13 @@ public class EventQueue {
     /*
         Returns true only if for all the pieces, all events of type MOVE_DOWN led to the piece to be in a valid position.
         False otherwise.
+        Move down events have to be delivered last in order to prevent that the piece cannot move down but then rotates and
+        then it can still go down.
      */
     public boolean performEvents() {
         boolean moveDownAlwaysValid = true;
         boolean noPieceCouldMove = true;
+        events.sort(eventComparator);
         for(Piece p : pieces) {
             for(Event e : events) {
                 try {
