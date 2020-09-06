@@ -7,7 +7,18 @@ import com.software_engineering_professor.piece.Piece;
 
 import java.util.Objects;
 
+import static com.googlecode.lanterna.TextColor.ANSI.BLUE;
+import static com.googlecode.lanterna.TextColor.ANSI.CYAN;
+import static com.googlecode.lanterna.TextColor.ANSI.GREEN;
+import static com.googlecode.lanterna.TextColor.ANSI.MAGENTA;
+import static com.googlecode.lanterna.TextColor.ANSI.RED;
+import static com.googlecode.lanterna.TextColor.ANSI.WHITE;
+import static com.googlecode.lanterna.TextColor.ANSI.YELLOW;
+
 public class PieceDrawer extends Drawer {
+    private TextColor.ANSI[] colors = new TextColor.ANSI[] {
+            RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
+    };
 
     public PieceDrawer(Point origin) {
         super(origin);
@@ -21,8 +32,7 @@ public class PieceDrawer extends Drawer {
     }
 
     private TextColor getColor(int type) {
-        TextColor.ANSI[] colors = TextColor.ANSI.values();
-        int index = (type % (colors.length - 1)) + 1;
+        int index = type % colors.length;
 
         return colors[index];
     }
