@@ -54,18 +54,22 @@ public class FilePieceLoader {
     }
 
     private Piece createPiece(int nextType, String fileName) throws IOException {
-        List<String> lines = Files.readAllLines(absPath(fileName));
+        List<String> lines = readLines(absPath(fileName));
         PieceBuilder builder = PieceBuilder.create(nextType);
         lines.stream().forEach(builder::add);
 
         return builder.build();
     }
 
-    private Path absPath(String fileName) {
-        return Paths.get(path + fileName);
+    private String absPath(String fileName) {
+        return path + fileName;
     }
 
     private List<String> getPieceFileNames() throws IOException {
+        return readLines(this.path);
+    }
+
+    private List<String> readLines(String path) throws IOException {
         List<String> filenames = new ArrayList<>();
 
         InputStream in = getResourceAsStream(path);

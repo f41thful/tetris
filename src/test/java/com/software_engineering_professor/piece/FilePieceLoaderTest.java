@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,9 +26,14 @@ class FilePieceLoaderTest {
     @Test
     public void givenDirHasValidFiles_thenReturnThosePieces() {
         Collection<Piece> expected = Arrays.asList(extraPiece0(), piece0(), piece0Txt(), piece1());
-        Collection<Piece> pieces = new FilePieceLoader("/extra-pieces-empty/").getPieces(0);
+        Collection<Piece> pieces = new FilePieceLoader().getPieces(0);
         assertEquals(4, pieces.size());
         expected.forEach(p -> assertTrue(contains(pieces, p)));
+
+        List<Integer> types = pieces.stream().map(Piece::getType).collect(Collectors.toList());
+        for(int i = 0; i < pieces.size(); i++) {
+            assertTrue(types.contains(i));
+        }
     }
 
     private boolean contains(Collection<Piece> pieces, Piece p) {
