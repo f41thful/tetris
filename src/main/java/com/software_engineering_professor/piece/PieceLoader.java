@@ -9,15 +9,18 @@ import java.util.Objects;
 public class PieceLoader {
     private PositionValidation positionValidation;
     private Collection<Piece> pieces;
+    private FilePieceLoader filePieceLoader;
 
     public PieceLoader(PositionValidation positionValidation) {
         Objects.requireNonNull(positionValidation);
         this.positionValidation = positionValidation;
+        filePieceLoader = new FilePieceLoader();
     }
 
     public Collection<Piece> getPieces() {
         if(pieces == null) {
             pieces = getDefaultPieces();
+            pieces.addAll(filePieceLoader.getPieces(getNextAvailableType()));
         } else {
             System.out.println("Pieces not loaded again.");
         }
@@ -39,6 +42,10 @@ public class PieceLoader {
 
     public int getMaxWidth() {
         return getPieces().stream().mapToInt(Piece::getWidth).max().getAsInt();
+    }
+
+    private int getNextAvailableType() {
+        return getPieces().stream().mapToInt(Piece::getType).max().getAsInt() + 1;
     }
 
     private Piece piece0() {
