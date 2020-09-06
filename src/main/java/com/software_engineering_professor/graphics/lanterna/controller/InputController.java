@@ -65,7 +65,7 @@ public class InputController implements Controller {
                 return new Event(MOVE_HORIZONTAL, 1);
             case ArrowDown:
                 return new Event(MOVE_DOWN, 1);
-            case ArrowUp:
+            case Character:
                 return new Event(ROTATE_LEFT, 1);
             default:
                 return null;
