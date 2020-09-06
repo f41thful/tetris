@@ -11,7 +11,7 @@ You can execute it from the terminal or directly from IntelliJ
 **java -cp tetris2-1.0-SNAPSHOT-jar-with-dependencies.jar:. com.software_engineering_professor.main.TetrisEntrypoint width height**
 width and height, both as a package, are optional parameters (0 or 2 parameters can be passed but not 1).
 
-# How to use it
+## How to use it
 In order to move the piece, just use the arrow keys (left, right and down).
 To rotate, you can use any character key.
 
