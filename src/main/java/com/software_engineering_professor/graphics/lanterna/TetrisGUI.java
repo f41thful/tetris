@@ -29,6 +29,10 @@ public class TetrisGUI {
         return screenManager.pollInput();
     }
 
+    public KeyStroke readInput() throws IOException {
+        return screenManager.readInput();
+    }
+
     public InputController getInputController() {
         return new InputController(this);
     }

@@ -58,6 +58,10 @@ public class ScreenManager {
         return terminal.pollInput();
     }
 
+    public KeyStroke readInput() throws IOException {
+        return terminal.readInput();
+    }
+
     private void closeOnExitInCaseOfASwingTerminal(Terminal terminal) {
         if(terminal instanceof SwingTerminalFrame) {
             ((SwingTerminalFrame) terminal).setDefaultCloseOperation(EXIT_ON_CLOSE);

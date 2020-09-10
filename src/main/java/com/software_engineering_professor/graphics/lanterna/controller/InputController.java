@@ -9,20 +9,22 @@ import com.software_engineering_professor.graphics.lanterna.TetrisGUI;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static com.software_engineering_professor.engine.event.EventType.MOVE_DOWN;
 import static com.software_engineering_professor.engine.event.EventType.MOVE_HORIZONTAL;
 import static com.software_engineering_professor.engine.event.EventType.ROTATE_LEFT;
 
 public class InputController implements Controller {
-    private static final int MAX_NUMBER_OF_EVENTS_PER_CALL = 10;
-
     private EventQueue eventQueue;
     private TetrisGUI keyStrokeProducer;
+    private ConcurrentLinkedQueue<KeyStroke> eventsNotDelivered;
 
     public InputController(TetrisGUI keyStrokeProducer) {
         Objects.requireNonNull(keyStrokeProducer);
         this.keyStrokeProducer = keyStrokeProducer;
+        eventsNotDelivered = new ConcurrentLinkedQueue<>();
+        listenForInputEvents();
     }
 
     @Override
@@ -37,18 +39,16 @@ public class InputController implements Controller {
 
     @Override
     public void addEvents(int iteration) {
-        for(int i = 0; i < MAX_NUMBER_OF_EVENTS_PER_CALL; i++) {
-            try {
-                KeyStroke keyStroke = keyStrokeProducer.pollInput();
-                Event event = getEvent(keyStroke);
-                if(event != null) {
-                    eventQueue.addEvent(event);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(this.eventQueue == null) {
+            return;
+        }
+
+        int size = eventsNotDelivered.size();
+        for(int i = 0; i < size; i++) {
+            this.eventQueue.addEvent(getEvent(eventsNotDelivered.poll()));
         }
     }
+
     private Event getEvent(KeyStroke keyStroke) {
         if(keyStroke == null) {
             return null;
@@ -70,5 +70,24 @@ public class InputController implements Controller {
             default:
                 return null;
         }
+    }
+
+    private void listenForInputEvents() {
+        Thread thread = new Thread(() -> {
+            KeyStroke keyStroke = null;
+            while(true) {
+                try {
+                    keyStroke = keyStrokeProducer.readInput();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (keyStroke != null) {
+                    eventsNotDelivered.offer(keyStroke);
+                }
+            }
+        });
+
+        thread.start();
     }
 }

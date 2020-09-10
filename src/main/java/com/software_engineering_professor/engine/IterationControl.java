@@ -20,9 +20,9 @@ public class IterationControl implements IterationListener {
     public void blockUntilNextIterationCanStart() throws InterruptedException {
         long elapsedNs = finishTimeNs - startTimeNs;
         float remainingNs = periodNs - elapsedNs;
-        printTrance(elapsedNs, remainingNs);
+//        printTrance(elapsedNs, remainingNs);
         if(remainingNs >= 0) {
-            System.out.println("Wait " + seconds(remainingNs) + " until next iteration.");
+//            System.out.println("Wait " + seconds(remainingNs) + " until next iteration.");
             Thread.sleep(millis((long) remainingNs));
         }
     }
@@ -30,15 +30,15 @@ public class IterationControl implements IterationListener {
     @Override
     public void start(int iteration) {
         startTimeNs = getCurrentTime();
-        System.out.println("----------------------------------------------------");
-        System.out.println("Iteration " + iteration + " starts at " + startTimeNs);
+//        System.out.println("----------------------------------------------------");
+//        System.out.println("Iteration " + iteration + " starts at " + startTimeNs);
     }
 
     @Override
     public void finish(int iteration) {
         finishTimeNs = getCurrentTime();
-        System.out.println("Iteration " + iteration + " finishes at " + finishTimeNs);
-        System.out.println("----------------------------------------------------");
+//        System.out.println("Iteration " + iteration + " finishes at " + finishTimeNs);
+//        System.out.println("----------------------------------------------------");
     }
 
     private long getCurrentTime() {
