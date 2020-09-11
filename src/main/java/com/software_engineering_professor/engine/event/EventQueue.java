@@ -30,12 +30,14 @@ public class EventQueue {
     public boolean performEvents() {
         boolean moveDownAlwaysValid = true;
         boolean noPieceCouldMove = true;
+        boolean atLeastOneMoveDownEvent = false;
         events.sort(eventComparator);
         for(Piece p : pieces) {
             for(Event e : events) {
                 try {
                     switch (e.getEventType()) {
                         case MOVE_DOWN:
+                            atLeastOneMoveDownEvent = true;
                             boolean couldMove = p.moveDown(e.getValue());
                             moveDownAlwaysValid &= couldMove;
                             noPieceCouldMove &= !couldMove;
@@ -54,7 +56,7 @@ public class EventQueue {
             }
         }
 
-        if(noPieceCouldMove) {
+        if(atLeastOneMoveDownEvent && noPieceCouldMove) {
             pieces.clear();
         }
 

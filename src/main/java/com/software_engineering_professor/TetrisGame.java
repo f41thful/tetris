@@ -11,8 +11,8 @@ import com.software_engineering_professor.piece.PieceLoader;
 import com.software_engineering_professor.piece.PieceStore;
 
 public class TetrisGame {
-    private static final float ITERATION_PERIOD_SC = 0.2f;
-    private static final int MOVE_DOWN_PERIOD = 1;
+    private static final float ITERATION_PERIOD_SC = 0.05f;
+    private static final int MOVE_DOWN_PERIOD = 4;
 
     private Board board;
     private GameEngine gameEngine;
