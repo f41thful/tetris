@@ -48,9 +48,16 @@
                 <version>3.1.1</version>
 
                 <configuration>
+                    <finalName>tetris</finalName>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.software_engineering_professor.main.TetrisEntrypoint</mainClass>
+                        </manifest>
+                    </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
 
                 <executions>
