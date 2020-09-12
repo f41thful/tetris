@@ -17,6 +17,9 @@ public class PositionValidation {
     public boolean isValid(Piece p, Collection<Point> points) {
         Objects.requireNonNull(p);
         Objects.requireNonNull(points);
+        if(points.isEmpty()) {
+            return false;
+        }
         return arePointsFree(p, points) && areWithinTheBoard(points);
     }
 
