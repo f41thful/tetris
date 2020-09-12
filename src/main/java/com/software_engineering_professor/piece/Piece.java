@@ -100,8 +100,10 @@ public class Piece {
     public void rotateLeft() {
         Collection<Point> newPoints = new ArrayList<>();
         for(Point p : occupiedPoints) {
-            newPoints.add(new Point(p.y, height - 1 - p.x));
+            newPoints.add(new Point(p.y, height - p.x));
         }
+
+        fixY(newPoints);
 
         if(positionValidation.isValid(this, getGlobalPoints(position, newPoints))) {
             occupiedPoints = newPoints;
@@ -144,6 +146,15 @@ public class Piece {
 
     public Piece clone() {
         return new Piece(type, position.clone(), getLocalPoints(), positionValidation);
+    }
+
+    private void fixY(Collection<Point> points) {
+        int minY = points.stream().mapToInt(p -> p.y).min().getAsInt();
+        if(minY < 0) {
+            for(Point p : points) { //restore to positive. If minY == -3, -3 - (-3) == -3 + 3 == 0
+                p.y -= minY;
+            }
+        }
     }
 
     private void validatePoint(Point p, String msg) {
