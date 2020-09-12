@@ -83,14 +83,14 @@ public class GameEngine {
             return true;
         }
 
-        boolean allValid = processEvents(iteration);
+        boolean isBoardStill = processEvents(iteration);
 
-        processCompletedLines(allValid);
+        processCompletedLines(isBoardStill);
         return false;
     }
 
-    private void processCompletedLines(boolean allValid) {
-        if(!allValid) {
+    private void processCompletedLines(boolean isBoardStill) {
+        if(isBoardStill) {
             Collection<Integer> completedLines = board.detectAndDeleteCompletedLines();
             if(!completedLines.isEmpty()) {
                 int maxLine = completedLines.stream().max(Integer::compareTo).get();
@@ -100,12 +100,16 @@ public class GameEngine {
     }
 
     private boolean processEvents(int iteration) {
-        moveDownController.addEvents(iteration);
-        selectedPieceController.addEvents(iteration);
+        boolean isBoardStill;
+        if(moveDownEventQueue.hasPieces()) {
+            moveDownController.addEvents(iteration);
+            isBoardStill = moveDownEventQueue.performEvents();
+        } else {
+            selectedPieceController.addEvents(iteration);
+            isBoardStill = selectedPieceEventQueue.performEvents();
+        }
 
-        boolean allValid = moveDownEventQueue.performEvents();
-        allValid &= selectedPieceEventQueue.performEvents();
-        return allValid;
+        return isBoardStill;
     }
 
     /*

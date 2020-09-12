@@ -22,13 +22,11 @@ public class EventQueue {
     }
 
     /*
-        Returns true only if for all the pieces, all events of type MOVE_DOWN led to the piece to be in a valid position.
-        False otherwise.
+        Returns true only if the board is still and at least one move down event was tried (no piece can move down).
         Move down events have to be delivered last in order to prevent that the piece cannot move down but then rotates and
         then it can still go down.
      */
     public boolean performEvents() {
-        boolean moveDownAlwaysValid = true;
         boolean noPieceCouldMove = true;
         boolean atLeastOneMoveDownEvent = false;
         events.sort(eventComparator);
@@ -39,7 +37,6 @@ public class EventQueue {
                         case MOVE_DOWN:
                             atLeastOneMoveDownEvent = true;
                             boolean couldMove = p.moveDown(e.getValue());
-                            moveDownAlwaysValid &= couldMove;
                             noPieceCouldMove &= !couldMove;
                             break;
                         case MOVE_HORIZONTAL:
@@ -62,7 +59,7 @@ public class EventQueue {
 
         events.clear();
 
-        return moveDownAlwaysValid;
+        return atLeastOneMoveDownEvent && noPieceCouldMove;
     }
 
     public void addIfNotPresent(Collection<Piece> pieces) {
