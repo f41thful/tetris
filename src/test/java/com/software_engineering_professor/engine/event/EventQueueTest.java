@@ -72,10 +72,10 @@ class EventQueueTest {
     }
 
     @Test
-    public void givenAllDownMovementsWereValid_thenTrue() {
+    public void givenAllDownMovementsWereValid_thenFalse() {
         pieces.forEach(piece -> doReturn(true).when(piece).moveDown(1));
         eventQueue.addEvent(new Event(MOVE_DOWN, 1));
-        assertTrue(eventQueue.performEvents());
+        assertFalse(eventQueue.performEvents());
     }
 
     @RepeatedTest(3)
@@ -93,7 +93,7 @@ class EventQueueTest {
     public void givenAllDownMovementsWereInvalid_thenDontApplyEventsToThosePiecesAnymore() {
         pieces.forEach(piece -> doReturn(false).when(piece).moveDown(1));
         eventQueue.addEvent(new Event(MOVE_DOWN, 1));
-        assertFalse(eventQueue.performEvents());
+        assertTrue(eventQueue.performEvents());
 
         eventQueue.addEvent(new Event(MOVE_DOWN, 1));
         eventQueue.performEvents();

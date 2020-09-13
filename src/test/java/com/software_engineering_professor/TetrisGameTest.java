@@ -6,6 +6,6 @@ import org.junit.jupiter.api.Test;
 class TetrisGameTest {
     @Test
     public void tetrisGameCanBeCreated() {
-        new TetrisGame(10, 10, new MoveDownController(1));
+        new TetrisGame(42, 30, new MoveDownController(1));
     }
 }
